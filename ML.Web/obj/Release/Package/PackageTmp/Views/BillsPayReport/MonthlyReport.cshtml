@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = "Monthly Report";
+}
+
+<div class="col-md-12 padLefAndRight">
+    <div class="row-1">
+        <div class="panel panel-danger minheight" style="margin-top:5px">
+            <div class="panel-heading">
+                <h4><b>Monthly Report Form</b></h4>
+                <a href="#" class="pull-right" style="margin-top: -27px;" data-toggle="modal" data-target="#myModal">Need help?</a>
+            </div>
+            <div class="panel-body">
+                <br />
+                <div class="col-md-3">
+                    <label for="txtYear">Year</label>
+                    <select class="form-control" id="txtYear">
+                        <option value=""></option>
+                        <option value="01">January</option>
+                        <option value="02">February</option>
+                        <option value="03">March</option>
+                        <option value="04">April</option>
+                        <option value="05">May</option>
+                        <option value="06">June</option>
+                        <option value="07">July</option>
+                        <option value="08">August</option>
+                        <option value="09">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="txtMonth">Month</label>
+                    <input type="date" class="form-control" id="txtMonth" />
+                </div>
+                <div class="col-md-3">
+                    <button id="btnSearch" class="btn btn-danger" style="margin-top: 21px;"><i class="glyphicon glyphicon-search"></i>  Search</button>
+                </div>
+
+                <div class="col-md-12">
+                    <hr />
+                    <h4 style="color: #cc0001;"><b>Serach Result</b></h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

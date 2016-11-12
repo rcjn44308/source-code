@@ -1,0 +1,296 @@
+﻿@using System.Web.Optimization
+@model ML.Web.Models.BillsPayViewModel
+@{
+    ViewBag.Title = "Bills Payment Form";
+}
+<div class="col-md-12 padLefAndRight">
+    <div style="margin-top:5px">
+        <div class="panel panel-danger">
+            <div class="panel-heading" style="background-color: #fff;">
+                <h4><b>Bills Payment Form</b></h4>
+                <a href="#" class="pull-right" style="margin-top: -27px;" data-toggle="modal" data-target="#myModal">Need help?</a>
+            </div>
+            <div class="panel-body">
+                <form id="formbillspay" action="@Url.Action("SubmitBillsPay", "BillsPay")">
+                    @Html.AntiForgeryToken()
+                    <div id="divVerifyForm" class="divVerify" style="display:none"><p class="pVerify"><b style="color: #cc0001;">Please fill-up all required fields.</b></p></div>
+                    <h3>PAYER</h3>
+                    <fieldset style="overflow-y: scroll;">
+                        <h4 style="color: #cc0001;"><b>Payer Information</b></h4>
+                        <hr />
+                        <p style="margin-left: 14px;">
+                            <span class="btn btn-warning" data-toggle="modal" data-target="#modalSearchPayor"><i class="glyphicon glyphicon-search"></i> Search Payer</span>
+                            <label>&nbsp;&nbsp;&nbsp;<b style="color:red">Note:</b> Click search payer button to fill-up all required fields.</label>
+                            <br /><br />
+                        </p>
+                        
+                        <div>
+                            @Html.HiddenFor(m=>m.payerID)
+                            <div class="col-md-6 divMarginTop">
+                                @Html.LabelFor(m => m.lastname) &nbsp; <label style="color: #b53536"><i class="glyphicon glyphicon-pencil"></i>Required fields!</label>
+                                @Html.TextBoxFor(m => m.lastname, new { @class = "form-control text-uppercase", @readonly = "readonly" })
+                            </div>
+                            <div class="col-md-6 divMarginTop">
+                                @Html.LabelFor(m => m.firstname) &nbsp; <label style="color: #b53536"><i class="glyphicon glyphicon-pencil"></i>Required fields!</label>
+                                @Html.TextBoxFor(m => m.firstname, new { @class = "form-control text-uppercase", @readonly = "readonly" })
+                            </div>
+                            <div class="col-md-6 divMarginTop">
+                                @Html.LabelFor(m => m.middlename)
+                                @Html.TextBoxFor(m => m.middlename, new { @class = "form-control text-uppercase", @readonly = "readonly" })
+                            </div>
+                            <div class="col-md-6 divMarginTop">
+                                @Html.LabelFor(m => m.contact) &nbsp; <label style="color: #b53536"><i class="glyphicon glyphicon-pencil"></i>Required fields!</label>
+                                @Html.TextBoxFor(m => m.contact, new { @class = "form-control text-uppercase", @readonly = "readonly" })
+                            </div>
+                            <div class="col-md-12 divMarginTop">
+                                @Html.LabelFor(m => m.address) &nbsp; <label style="color: #b53536"><i class="glyphicon glyphicon-pencil"></i>Required fields!</label>
+                                @Html.TextAreaFor(m => m.address, new { @style = "resize:none", @class = "form-control text-uppercase", @readonly = "readonly" })
+                            </div>
+                        </div>
+
+                    </fieldset>
+
+                    <h3>ACCOUNT</h3>
+                    <fieldset style="overflow-y: scroll;">
+                        <h4 style="color: #cc0001;"><b>Account Information</b></h4>
+                        <div class="divVerify accountverification" style="display:none">
+                            <p class="pVerify"><b>Note: Verify the account number before you proceed.</b></p>
+                        </div>
+                        <hr />
+                        <p style="margin-left: 14px;">
+                            <button type="button" class="btn btn-warning" id="btnSearchCompany" data-url="@Url.Action("ListOfrecentTrans", "BillsPay")"><i class="glyphicon glyphicon-search"></i> Search Company</button>
+                            <label>&nbsp;&nbsp;&nbsp;<b style="color:red">Note:</b> Click search company button to fill-up all required fields.</label>
+                            <br /><br />
+                        </p>
+                        @Html.HiddenFor(m => m.CompID)
+                        <div class="col-md-12 divMarginTop">
+                            @Html.LabelFor(m => m.CompName) &nbsp; <label style="color: #b53536"><i class="glyphicon glyphicon-pencil"></i>Required fields!</label>
+                            @Html.TextBoxFor(m => m.CompName, new { @class = "form-control text-uppercase", @readonly = "readonly" })
+                        </div>
+                        <div class="col-md-6 divMarginTop">
+                            @Html.LabelFor(m => m.CompAccountNo) &nbsp; <label style="color: #b53536"><i class="glyphicon glyphicon-pencil"></i>Required fields!</label>
+                            @Html.TextBoxFor(m => m.CompAccountNo, new { @class = "form-control text-uppercase", @readonly = "readonly" })
+                        </div>
+                        <div class="col-md-6 divMarginTop">
+                            @Html.LabelFor(m => m.CompFname) &nbsp; <label style="color: #b53536"><i class="glyphicon glyphicon-pencil"></i>Required fields!</label>
+                            @Html.TextBoxFor(m => m.CompFname, new { @class = "form-control text-uppercase", @readonly = "readonly" })
+                        </div>
+                        <div class="col-md-6 divMarginTop">
+                            @Html.LabelFor(m => m.CompLname) &nbsp; <label style="color: #b53536"><i class="glyphicon glyphicon-pencil"></i>Required fields!</label>
+                            @Html.TextBoxFor(m => m.CompLname, new { @class = "form-control text-uppercase", @readonly = "readonly" })
+                        </div>
+                        <div class="col-md-6 divMarginTop">
+                            @Html.LabelFor(m => m.CompMname)
+                            @Html.TextBoxFor(m => m.CompMname, new { @class = "form-control text-uppercase", @readonly = "readonly" })
+                        </div>
+                    </fieldset>
+
+                    <h3>PAYMENT</h3>
+                    <fieldset style="overflow-y: scroll;">
+                        <h4 style="color: #cc0001;"><b>Payment Information</b></h4>
+                        <hr />
+                        <div class="col-md-4 divMarginTop">
+                            @Html.LabelFor(m=>m.amountPaid)
+                            @Html.TextBoxFor(m => m.amountPaid, new { @type = "number", @class = "form-control required text-right " })
+                        </div>
+                        <div class="col-md-4 divMarginTop">
+                            @Html.LabelFor(m=>m.currency)
+                            @Html.DropDownListFor(m => m.currency, Model.scurrency, new { @class = "form-control text-uppercase", @readonly = "readonly"})
+                        </div>
+                        <div class="col-md-4 divMarginTop" id="divCharge" data-url="@Url.Action("CalculateCharge", "BillsPay")">
+                            @Html.LabelFor(m=>m.charge) &nbsp; <span class="getcharge" style="display:none">
+                                                                    <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
+                                                                    <b style="color:red">Generating...</b>
+                                                                </span>
+
+                            @Html.TextBoxFor(m => m.charge, new { @type = "number", @class = "form-control required text-right ", @readonly = "readonly" })
+                        </div>
+                        <div class="col-md-12 divMarginTop">
+                            @Html.LabelFor(m => m.otherDetails)
+                            @Html.TextAreaFor(m => m.otherDetails, new { @style="resize:none", @class = "form-control text-uppercase required" })
+                        </div>
+
+                    </fieldset>
+
+                    <h3>CONFIRMATION</h3>
+                    <fieldset style="overflow-y: scroll;">
+                        <h4 style="color: #cc0001;"><b>Confirmation Information</b></h4>
+                        <div class="divVerify accountverification">
+                            <p class="pVerify"><b>Note: Verify the account number before you proceed.</b></p>
+                        </div>
+                        <hr />
+
+                        <div>
+                            <div class="col-md-12 divMarginTop">
+                                <label for="txtCcompany">Company</label>
+                                <input type="text" name="txtCcompany" id="txtCcompany" class="form-control text-uppercase" readonly />
+                            </div>
+                            <div class="col-md-4 divMarginTop">
+                                <label for="txtCaccountName">Account name</label>
+                                <input type="text" name="txtCaccountName" id="txtCaccountName" class="form-control text-uppercase" readonly />
+                            </div>
+                            <div class="col-md-4 divMarginTop">
+                                <label for="txtCaccountNo">Account number</label>
+                                <input type="text" name="txtCaccountNo" id="txtCaccountNo" class="form-control text-uppercase" readonly />
+                            </div>
+                            <div class="col-md-4 divMarginTop">
+                                <label for="txtCpayer">Payer</label>
+                                <input type="text" name="txtCpayer" id="txtCpayer" class="form-control text-uppercase" readonly />
+                            </div>
+                            <div class="col-md-4 divMarginTop">
+                                <label for="txtCamountpaid">Amount paid</label>
+                                <input type="text" name="txtCamountpaid" id="txtCamountpaid" class="form-control text-uppercase" readonly />
+                            </div>
+                            <div class="col-md-4 divMarginTop">
+                                <label for="txtCcharge">Charge</label>
+                                <input type="text" name="txtCcharge" id="txtCcharge" class="form-control text-uppercase" readonly />
+                            </div>
+                            <div class="col-md-4 divMarginTop">
+                                <label for="txtCtotal">Total</label>
+                                <input type="text" name="txtCtotal" id="txtCtotal" class="form-control text-uppercase" readonly />
+                            </div>
+                            <div id="printUrl" data-url="@Url.Action("GetReceiptData", "BillsPay")"></div>
+                            @*<div class="col-md-12">
+                                <br />
+                                <div class="divVerify padLefAndRight">
+
+                                    <div class="pVerify">
+                                        <input id="ConfirmCheckbox" name="ConfirmCheckbox" type="checkbox" class="style3 icon icon-check-empty required" />
+                                        <label for="ConfirmCheckbox">Verify transaction.</label>
+                                    </div>
+
+                                </div>
+                            </div>*@
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!--Search Payer Modal-->
+<div class="modal fade bs-example-modal-lg" id="modalSearchPayor" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #eeeeee;">
+                <h4 style="color: #cc0001;"><b>Search Payer</b></h4>
+            </div>
+            <div class="panel-body">
+                <div id="divSearchVadidate" class="divVerify" style="display:none"><p class="pVerify"><b style="color: #cc0001;">Please fill-up all required fields.</b></p></div>
+                <div class="col-md-4" style="padding-left: 0px;padding-right: 5px;">
+                    <label>Last name</label> &nbsp;<label style="color:red"><i class="glyphicon glyphicon-pencil"></i>Required!</label>
+                    <input type="text" class="form-control text-uppercase" id="txtsLname" />
+                </div>
+                <div class="col-md-4" style="padding-left: 0px;padding-right: 5px;">
+                    <label>First name</label> &nbsp;<label style="color:red"><i class="glyphicon glyphicon-pencil"></i>Required!</label>
+                    <input type="text" class="form-control text-uppercase" id="txtsFname" />
+                </div>
+                <div class="col-md-4" style="padding-left: 0px;padding-right: 5px;">
+                    <label>Middle name</label>
+                    <input type="text" class="form-control text-uppercase" id="txtsMname" />
+                </div>
+
+            </div>
+            <div class="modal-footer" style="background-color: #eee;">
+                <span class="btn btn-danger pull-left" data-dismiss="modal"><i class="glyphicon glyphicon-remove"></i> Cancel</span>
+                <button id="btnSearchPayer" type="button" class="btn btn-warning" data-url="@Url.Action("searchpayer", "BillsPay")"><i class="glyphicon glyphicon-search"></i> Search Payer</button>
+                <button id="btnAddPayor" type="button" class="btn btn-success" data-url="@Url.Action("AddKyc", "Kyc")"><i class="glyphicon glyphicon-plus"></i> Add Payer</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<!--Add Payer Modal-->
+<div class="modal fade bs-example-modal-lg" id="modalAddAccount" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #eeeeee;">
+                <h4 style="color: #cc0001;"><b>Add Account</b></h4>
+            </div>
+            <div id="divVadidateAddAccount" class="divVerify" style="display:none" ><p class="pVerify"><b style="color: #cc0001;">Please fill-up all required fields.</b></p></div>
+            <div class="panel-body">
+                <div class="col-md-12 padLeft">
+                    <input type="hidden" id="txtcompanyID" />
+                    @{ Html.RenderPartial("_searchCompany");}
+                </div>
+
+                <div class="col-md-6 padLeft divMarginTop">
+                    <label>Account</label> &nbsp;<label style="color:red"><i class="glyphicon glyphicon-pencil"></i>Required!</label>
+                    <input type="text" class="form-control text-uppercase" id="txtAccountNo" />
+                </div>
+                <div class="col-md-6 padLeft divMarginTop">
+                    <label>First name</label> &nbsp;<label style="color:red"><i class="glyphicon glyphicon-pencil"></i>Required!</label>
+                    <input type="text" class="form-control text-uppercase" id="txtFname" />
+                </div>
+                <div class="col-md-6 padLeft divMarginTop">
+                    <label>Last name</label> &nbsp;<label style="color:red"><i class="glyphicon glyphicon-pencil"></i>Required!</label>
+                    <input type="text" class="form-control text-uppercase" id="txtLname" />
+                </div>
+                <div class="col-md-6 padLeft divMarginTop">
+                    <label>Middle name</label>
+                    <input type="text" class="form-control text-uppercase" id="txtMname" />
+                </div>
+
+            </div>
+            <div class="modal-footer" style="background-color: #eee;">
+                <span class="btn btn-danger pull-left" data-dismiss="modal"><i class="glyphicon glyphicon-remove"></i> Cancel</span>
+                <button type="button" class="btn btn-success" onclick="AddCompany(); return false;"><i class="glyphicon glyphicon-plus"></i> Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="js-title-step"></h4>
+            </div>
+            <div class="modal-body">
+                <div class="row hide" data-step="1" data-title="Payers Information">
+                    <div class="well">
+                        <p>1.) Click button "Sample Image" to search payer.</p>
+                        <p>2.) Type payers information for searching.</p>
+                        <p>3.) Click button "Select" to auto fill payer's information</p>
+                        <p>4.) Click next button "Next Step" to proceed account information.</p>
+                    </div>
+                </div>
+                <div class="row hide" data-step="2" data-title="Account Information">
+                    <div class="well">
+                        <p>1.) Click button "Sample Image" to search company.</p>
+                        <p>2.) Type company information for searching.</p>
+                        <p>3.) Click button "Select" to auto fill company's information</p>
+                        <p>4.) Click next button "Next Step" to proceed payment information.</p>
+                    </div>
+                </div>
+                <div class="row hide" data-step="3" data-title="Payment Information">
+                    <div class="well">
+                        <p>1.) Fill-up amount paid.</p>
+                        <p>2.) Fill-up currency.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default js-btn-step pull-left" data-orientation="cancel" data-dismiss="modal"></button>
+                <button type="button" class="btn btn-warning js-btn-step" data-orientation="previous"></button>
+                <button type="button" class="btn btn-success js-btn-step" data-orientation="next"></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    @Scripts.Render("~/bundles/steps")
+    @Scripts.Render("~/bundles/trans")
+    @*<script>
+
+        $('input[type="checkbox"].style3').checkbox({
+            buttonStyle: 'btn-danger',
+            buttonStyleChecked: 'btn-success',
+            checkedClass: 'icon-check',
+            uncheckedClass: 'icon-check-empty'
+        });
+    </script>*@
+}

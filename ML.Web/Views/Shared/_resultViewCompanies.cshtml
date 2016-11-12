@@ -1,0 +1,60 @@
+﻿@model ML.Web.Models.IEnumerableResult
+
+<div class="table-responsive" style="max-height:300px">
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#searchCompanyList').keyup(function () {
+                searchTable($(this).val());
+            });
+        });
+
+        function searchTable(inputVal) {
+            var table = $('#tblCompanyList');
+            table.find('tr').each(function (index, row) {
+                var allCells = $(row).find('td');
+                if (allCells.length > 0) {
+                    var found = false;
+                    allCells.each(function (index, td) {
+                        var regExp = new RegExp(inputVal, 'i');
+                        if (regExp.test($(td).text())) {
+                            found = true;
+                            return false;
+                        }
+                    });
+                    if (found == true) $(row).show(); else $(row).hide();
+                }
+            });
+        }
+    </script>
+    <input type="text" id="searchCompanyList" class="form-control" placeholder="Search Company" />
+    <table class="table table-striped" id="tblCompanyList">
+        <thead>
+            <tr>
+                <td><b>COMPANY NAME</b></td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ListOfCompanies)
+            {
+                string accountName = string.Empty;
+                if (item.accountName.Contains("'"))
+                {
+                    accountName = item.accountName.Replace("'", "");
+                }
+                else
+                {
+                    accountName = item.accountName;
+
+                }
+                <tr>
+                    <td style="padding-top:15px">
+                        @item.accountName
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-danger pull-right" onclick="selectCompanyName('@item.accountName','@item.accountID'); return false;"><i class="glyphicon glyphicon-hand-up"></i> Select</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

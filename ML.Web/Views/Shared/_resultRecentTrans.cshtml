@@ -1,0 +1,30 @@
+﻿@model ML.Web.Models.IEnumerableResult
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <td>Company</td>
+                <td>Account No</td>
+                <td>Last name</td>
+                <td>First name</td>
+                <td>Middle name</td>
+            </tr>
+        </thead>
+        <tbody class="text-uppercase">
+            @foreach (var item in Model.ListOfRecentTrans)
+            {
+                <tr>
+                    <td style="padding-top:15px">@item.companyName</td>
+                    <td style="padding-top:15px">@item.accountNumber</td>
+                    <td style="padding-top:15px">@item.accountLname</td>
+                    <td style="padding-top:15px">@item.accountFname</td>
+                    <td style="padding-top:15px">@item.accountMname</td>
+                    <td>
+                        <button onclick="selectCompany('@item.compaynID','@item.companyName','@item.accountNumber','@item.accountFname','@item.accountLname','@item.accountMname'); return false;" class="btn btn-danger pull-right"><i class="glyphicon glyphicon-hand-up"></i> Select</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

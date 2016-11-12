@@ -1,0 +1,118 @@
+﻿@using System.Web.Optimization
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" charset="UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/Site")
+    @Styles.Render("~/Content/style")
+    <link href="~/Content/Styling.css" rel="stylesheet" />
+    @RenderSection("styles", required: false)
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/jquery.steps.css" rel="stylesheet" />
+    <link href="~/Content/checknet.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="~/Content/Images/favicon.png" />
+    <style type="text/css">
+        body {
+            background: #F4F0EF;
+            font-size: 12px;
+        }
+    </style>
+    <!--
+    *=*=         =*=* *=       *=      *= *=       =* *====* *=       *=       *====* *=******* *=*****
+    *= *=       =* =* *=       *=      *= *=       =* *====* *=       *=       *====* *======== *====== *
+    *=  *=     =*  =* *=       *=      *= *=       =*   ==   *=       *=         ==   *=        *=     = *
+    *=   *=   =*   =* *=       *=      *= *=       =*   ==   *=       *=         ==   *=   **   *=     = *
+    *=    *= =*    =* *=       *=*******= *=       =*   ==   *=       *=         ==   *===***   *====== *
+    *=     *=*     =* *=       *=======*= *=       =*   ==   *=       *=         ==   *===***   *=******
+    *=      *      =* *=       *=      *= *=       =*   ==   *=       *=         ==   *=        *=   *=
+    *=             =* *=****** *=      *= * = = = = * *====* *=****** *=****** *====* *=******* *=    *=
+    *=             =* *======= *=      *=  * * * * *  *====* *======= *======= *====* *======== *=     *=
+    -->
+
+</head>
+<body>
+    @Html.Partial("Header")
+    <div id="divUrlPing" data-url="/images/ping.png"></div>
+    <div class="container-fluid">
+        <div class="col-md-12" style="min-height: 100%; background-color: #eeeeee; border-radius: 3px; margin-top: -31px; padding-top: 24px;">
+            <div class="col-md-2" id="divSidebar" style="margin-top:5px">
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <h4><b>Wallet Information</b></h4>
+                    </div>
+                    <div class="panel-body">
+                        <div>
+                            <p>
+                                <b style="font-size: 18px; color: #417936;"><i class="glyphicon glyphicon-briefcase"></i> Balance </b>
+                                <b style="font-size: 15px; color: red; padding-left: 24px;"> P1.00</b>
+                                @*<b style="padding-left: 15px;"> <img src="~/images/load1.gif" alt="loading" /> loading... </b>*@
+                            </p>
+                            <p>
+                                <b style="font-size: 18px; color: #417936;"><i class="glyphicon glyphicon-lock"></i> Account # </b>
+                                <b style="font-size: 15px; color: red;"> 16040000000303</b>
+                            </p>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+       
+            <div class="col-md-10" id="divNet">
+                @*<div>
+                    <div style="background-color:#fff;">
+                        <b style="padding-left: 15px;"> <img src="~/images/load1.gif" alt="loading" /> Initializing... </b>
+                    </div>
+                </div>*@
+                @RenderBody()
+               
+            </div>
+        </div>
+    </div>
+    <!--Modal Inactivity-->
+    <div class="modal fade modal-inactivity" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header border-disabler">
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body">
+                    <div style="text-align:center">
+                        <p class="l-fontsize18" style="color:red">Your Session is about to expire!</p>
+                        <p>
+                            You will be logged out in <b style="font-size:14px;color:red"><span id="timer" style="font-size:12px"></span> seconds</b>.
+                        </p>
+                        <p>Do you want to stay signed in?</p>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-sm btn-success btn-green" onclick="window.location.reload()" data-dismiss="modal">Yes, Keep me signed in</button>
+                    <input type="button" value="No, Sign me out" class="btn btn-sm btn-danger btn-red btnLogout" data-action="@Url.Action("Logout", "User")" data-for-desktop-action="@Url.Action("SoLogout", "User")" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--End Modal-->
+    <footer class="footer">
+        <div class="contained">
+            <p class="fontWhite text-muter">M. Lhuillier Financial Services, Inc. All Rights Reserved @DateTime.Now.Year.</p>
+        </div>
+    </footer>
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jquery-ui")
+    @Scripts.Render("~/bundles/myjs")
+    @Scripts.Render("~/bundles/submenu")
+    @Scripts.Render("~/bundles/sessionjs")
+    @Scripts.Render("~/bundles/common")
+    @Scripts.Render("~/bundles/modalsteps")
+    @RenderSection("scripts", required: false)
+    <script src="~/Scripts/internetcontrol/jquery.checknet-1.6.min.js"></script>
+</body>
+</html>

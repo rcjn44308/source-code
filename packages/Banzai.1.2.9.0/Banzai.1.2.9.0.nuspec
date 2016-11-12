@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Banzai</id>
+    <version>1.2.9.0</version>
+    <title>Banzai</title>
+    <authors>eric_swann</authors>
+    <owners>eric_swann</owners>
+    <projectUrl>https://github.com/eswann/Banzai</projectUrl>
+    <iconUrl>http://upload.wikimedia.org/wikipedia/commons/0/03/Empty_wave_at_Banzai_Pipeline.jpeg</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>An easy async pipeline orchestration library</description>
+    <summary>An easy async pipeline orchestration library</summary>
+    <releaseNotes>https://github.com/eswann/Banzai/wiki
+
+* Banzai.Autofac release only.
+* Fixed a couple of problems with Registering ITransitionFuncNode.  It seems that Autofac was having problems resolving some child interfaces with one generic parameter, so had to be more restrictive on interfaces registered as.  Odd behavior, potentially an Autofac bug...this is a workaround.</releaseNotes>
+    <copyright>Copyright 2014 Eric Swann, et. al. - All rights reserved.</copyright>
+    <language />
+    <tags>Pipeline Dataflow Workflow</tags>
+  </metadata>
+</package>

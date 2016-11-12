@@ -1,0 +1,44 @@
+﻿@model ML.Web.Models.CancelBillsPayViewModel
+@using System.Web.Optimization
+
+@{
+    ViewBag.Title = "Cancel BillsPay Form";
+}
+
+<div class="col-md-12 padLefAndRight">
+    <div class="panel panel-danger minheight" style="margin-top:5px">
+        <div class="panel-heading" style="background-color: #fff;">
+            <h4><b>Bills Payment Cancellation Form</b></h4>
+            <a href="#" class="pull-right" style="margin-top: -27px;" data-toggle="modal" data-target="#myModal">Need help?</a>
+        </div>
+        <div class="panel-body">
+            <div class="row-1" style="display:none">
+                <h4 style="color: #cc0001;"><b>Search KPTN</b></h4>
+                <br />
+                <div class="col-md-6">
+                    <input type="hidden" id="txtcompanyID" />
+                    @{ Html.RenderPartial("_searchCompany");}
+                    <div class="divMarginTop">
+                        <label>KTPN</label>&nbsp;<label style="color:red"><i class="glyphicon glyphicon-pencil"></i> Required!</label> 
+                        <input type="text" id="txtkptn" class="form-control text-uppercase" />
+                    </div>
+                   
+                    <button class="btn btn-danger pull-right" style="margin-top: 21px;" id="btnCancellationSearch" data-url="@Url.Action("kptnDetails", "BillsPayCancellation")"><i class="glyphicon glyphicon-search"></i> Search KPTN</button>
+                </div>
+            </div>
+            <div class="row-2" style="display:none">
+                <form id="form0" action="@Url.Action("CancelBillsPayForm", "BillsPayCancellation")" method="post">
+                    <input type="hidden" id="txtCancellationType" value="0" />
+                    <div id="divCancelDetails"></div> 
+                </form>
+                <div class="col-md-12">
+                    <br />
+                    <button class="btn btn-success pull-right" id="btnCancellationSubmit"><i class="glyphicon glyphicon-saved"></i> Submit Cancellation</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    @Scripts.Render("~/bundles/cancel")
+}

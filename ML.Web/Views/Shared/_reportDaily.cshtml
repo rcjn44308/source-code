@@ -1,0 +1,59 @@
+﻿@model ML.Web.Models.IenumerableReportResult
+@{
+    int x = 0;
+}
+<table id="fromRptDaily">
+    <tbody>
+        @foreach (var item in Model.dailyReport)
+        {
+            <tr>
+                <td><input type="hidden" name="dailyReport[@x].txnNo" value="@item.txnNo" /></td>
+                <td><input type="hidden" name="dailyReport[@x].controlNo" value="@item.controlNo" /></td>
+                <td><input type="hidden" name="dailyReport[@x].txnDate" value="@item.txnDate" /></td>
+                <td><input type="hidden" name="dailyReport[@x].payorFullName" value="@item.payorFullName" /></td>
+                <td><input type="hidden" name="dailyReport[@x].accountFullName" value="@item.accountFullName" /></td>
+                <td><input type="hidden" name="dailyReport[@x].kptn" value="@item.kptn" /></td>
+                <td><input type="hidden" name="dailyReport[@x].currency" value="@item.currency" /></td>
+                <td><input type="hidden" name="dailyReport[@x].amount" value="@item.amount" /></td>
+                <td><input type="hidden" name="dailyReport[@x].commission" value="@item.commission" /></td>
+            </tr>
+            x++;
+        }
+    </tbody>
+</table>
+
+<div class="table-responsive" style="overflow:scroll; max-height:300px;">
+    <table id="tblDailyReport" class="table table-striped">
+        <thead style="background-color: #eee;">
+            <tr>
+                <th><b>NO</b></th>
+                <th><b>CONTROL SERIES NO</b></th>
+                <th><b>TRANSACTION DATE</b></th>
+                <th><b>PAYOR NAME</b></th>
+                <th><b>ACCOUNT NAME</b></th>
+                <th><b>KPTN</b></th>
+                <th><b>CURRENCY</b></th>
+                <th><b>AMOUNT</b></th>
+                <th><b>COMMISSION</b></th>
+                <th><b>OPERATOR</b></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.dailyReport)
+            {
+                <tr>
+                    <td>@item.txnNo</td>
+                    <td>@item.controlNo</td>
+                    <td>@item.txnDate</td>
+                    <td>@item.payorFullName</td>
+                    <td>@item.accountFullName</td>
+                    <td>@item.kptn</td>
+                    <td>@item.currency</td>
+                    <td>@item.amount</td>
+                    <td>@item.commission</td>
+                    <td>Not Yet</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

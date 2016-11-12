@@ -1,0 +1,143 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+.panel {
+    border-radius: 0 !important;
+    border: 0 !important;
+}
+
+.s-naming {
+    background-color: #8A877E;
+    height: 45px;
+    line-height: 3;
+    padding-left: 20px;
+    font-size: 14px;
+    color: #fff;
+    border-radius: 2px;
+}
+
+.t-marg {
+    /*margin-top: 20px;*/
+}
+
+.l-background {
+    background: #fff;
+}
+
+.c-marg {
+    margin-left: 15px;
+    font-size: 14px;
+}
+
+.c-pad {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.c-bg {
+    /*background: rgba(22,22,22,0.7) !important;
+	color: #fff !important;*/
+    font-size: 14px;
+    color: #0C0C0C !important;
+}
+
+/*.form-control
+{
+	border: 0 !important;
+	border-radius: 2px !important;
+}*/
+
+/*.btn 
+{
+	border: 0 !important;
+	border-radius: 2px !important;
+}*/
+
+
+
+/*START DROP*/
+.drop-container {
+    /*width: 150px;*/
+    /*margin: 10px auto 30px auto;*/
+}
+
+
+
+
+/*.ac-container input{
+	display: none;
+}*/
+
+.cont {
+    display: none;
+}
+
+.drop-container label {
+    background-color: #8A877E;
+    display: block;
+    color: #fff;
+    padding-bottom: 6px;
+    padding-top: 6px;
+    font-weight: lighter;
+    border-radius: 2px;
+}
+
+.drop-container article {
+    background: transparent;
+    margin-top: 0;
+    overflow: hidden;
+    max-height: 0;
+    position: relative;
+    z-index: 10;
+    transition: max-height 0.8s ease-in-out, margin 0.08s linear,;
+}
+
+.drop-container input:checked ~ article {
+    transition: max-height 0.8s ease-in-out, margin 0.08s linear,;
+}
+
+    /*.ac-container article button{
+	font-style: italic;
+	color: #777;
+	line-height: 23px;
+	font-size: 14px;
+	padding: 20px;
+	text-shadow: 1px 1px 1px rgba(255,255,255,0.8);
+}
+*/
+    .drop-container input:checked ~ article.drop-small {
+        max-height: 600px;
+        margin: 15px;
+    }
+
+/*END DROP*/
+
+
+.resize {
+    resize: vertical;
+}
+
+
+/*Add CSS*/
+.addKycHead {
+    background-color: #8A877E;
+    height: 45px;
+    line-height: 3;
+    padding-left: 20px;
+    font-size: 14px;
+    color: #fff;
+    border-radius: 2px;
+}
+
+.btndanger {
+    background-color: #333333;
+    border-color: #F3ECEC;
+}
+
+    .btndanger:hover, .btndanger:focus, .btndanger.focus, .btndanger:active, .btndanger.active, .open > .dropdown-toggle.btndanger {
+        color: #fff;
+        background-color: #A7A2A2;
+        border-color: #040404;
+    }

@@ -1,0 +1,65 @@
+﻿@using System.Web.Optimization
+@model ML.Web.Models.ReportsViewModel
+
+@{
+    ViewBag.Title = "Transaction History Report";
+}
+
+<div class="col-md-12 padLefAndRight">
+    <div class="row-1">
+        <div class="panel panel-danger minheight" style="margin-top:5px">
+            <div class="panel-heading" style="background-color: #fff;">
+                <h4><b>Daily Report Form</b></h4>
+                <a href="#" class="pull-right" style="margin-top: -27px;" data-toggle="modal" data-target="#myModal">Need help?</a>
+            </div>
+            <div class="panel-body">
+                <input type="hidden" id="txtReportType" value="0" />
+                <label id="txtReportDetails" style="display:none"></label>
+                <div class="col-md-3 adjustPadding">
+                    <label for="txtdtFrom">Date From</label>
+                    @Html.EditorFor(m => m.dtFrom, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="col-md-3 adjustPadding">
+                    <label for="txtdtFrom">Date To</label>
+                    @Html.EditorFor(m => m.dtTo, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="col-md-3 adjustPadding">
+                    <button id="btnSearchHistory" data-url="@Url.Action("HistoryReport", "BillsPayReport")" class="btn btn-danger neednet" style="margin-top: 21px;"><i class="glyphicon glyphicon-search"></i>  Search</button>
+                    @*<input type="submit" class="btn btn-danger" value="Search" />*@
+                </div>
+
+                <div class="col-md-12 adjustPadding">
+                    <br />
+                    <h4 style="color: #cc0001;"><b>Search Result</b></h4>
+                    <div id="divPrint">
+                        <div id="divResultHead" style="display:none" data-initial="@Url.Action("InitializeHistoryReport", "BillsPayReport")" data-url="@Url.Action("Download", "BillsPayReport")">
+                            @{ Html.RenderPartial("_reportHead");}
+                        </div>
+                        <div id="divSearchHistoryResult">
+                        </div>
+                        <div id="divResultFooter" style="display:none">
+                            <p>
+                                <b style="font-size:20px;">Total Debit <label id="lbldebitCount"></label></b>
+                                <b style="font-size:20px; text-align:right" class="pull-right"><label id="lblDebitAmt"></label></b>
+                            </p>
+                            <p>
+                                <b style="font-size:20px;">Total Credit <label id="lblcreditCount"></label></b>
+                                <b style="font-size:20px; text-align:right" class="pull-right"><label id="lblCreditAmt"></label></b>
+                            </p>
+                            <p>
+                                <b style="font-size:20px;">Ending Balance</b>
+                                <b style="font-size:20px; text-align:right" class="pull-right"><label id="lblEndingBal"></label></b>
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+@section scripts{
+    @Scripts.Render("~/bundles/reports")
+}

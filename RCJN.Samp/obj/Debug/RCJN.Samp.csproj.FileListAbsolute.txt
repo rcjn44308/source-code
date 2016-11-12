@@ -1,0 +1,23 @@
+D:\Richard Folder\Project back-up 2015\OFW\RCJN.Samp\bin\Debug\RCJN.Samp.dll
+D:\Richard Folder\Project back-up 2015\OFW\RCJN.Samp\bin\Debug\RCJN.Samp.pdb
+D:\Richard Folder\Project back-up 2015\OFW\RCJN.Samp\obj\Debug\RCJN.Samp.csprojResolveAssemblyReference.cache
+D:\Richard Folder\Project back-up 2015\OFW\RCJN.Samp\obj\Debug\RCJN.Samp.dll
+D:\Richard Folder\Project back-up 2015\OFW\RCJN.Samp\obj\Debug\RCJN.Samp.pdb
+C:\Users\Richard-CRM\Documents\Visual Studio 2013\Projects\OFW\RCJN.Samp\bin\Debug\RCJN.Samp.dll
+C:\Users\Richard-CRM\Documents\Visual Studio 2013\Projects\OFW\RCJN.Samp\bin\Debug\RCJN.Samp.pdb
+C:\Users\Richard-CRM\Documents\Visual Studio 2013\Projects\OFW\RCJN.Samp\obj\Debug\RCJN.Samp.dll
+C:\Users\Richard-CRM\Documents\Visual Studio 2013\Projects\OFW\RCJN.Samp\obj\Debug\RCJN.Samp.pdb
+D:\MVC Source Code\OFW\RCJN.Samp\bin\Debug\RCJN.Samp.dll
+D:\MVC Source Code\OFW\RCJN.Samp\bin\Debug\RCJN.Samp.pdb
+D:\MVC Source Code\OFW\RCJN.Samp\obj\Debug\RCJN.Samp.csprojResolveAssemblyReference.cache
+D:\MVC Source Code\OFW\RCJN.Samp\obj\Debug\RCJN.Samp.dll
+D:\MVC Source Code\OFW\RCJN.Samp\obj\Debug\RCJN.Samp.pdb
+C:\update\OFW\RCJN.Samp\bin\Debug\RCJN.Samp.dll
+C:\update\OFW\RCJN.Samp\bin\Debug\RCJN.Samp.pdb
+C:\update\OFW\RCJN.Samp\obj\Debug\RCJN.Samp.dll
+C:\update\OFW\RCJN.Samp\obj\Debug\RCJN.Samp.pdb
+C:\Users\CABA13072442\Documents\Visual Studio 2013\Projects\OFW\RCJN.Samp\bin\Debug\RCJN.Samp.dll
+C:\Users\CABA13072442\Documents\Visual Studio 2013\Projects\OFW\RCJN.Samp\bin\Debug\RCJN.Samp.pdb
+C:\Users\CABA13072442\Documents\Visual Studio 2013\Projects\OFW\RCJN.Samp\obj\Debug\RCJN.Samp.dll
+C:\Users\CABA13072442\Documents\Visual Studio 2013\Projects\OFW\RCJN.Samp\obj\Debug\RCJN.Samp.pdb
+C:\Users\CABA13072442\Documents\Visual Studio 2013\Projects\OFW\RCJN.Samp\obj\Debug\RCJN.Samp.csprojResolveAssemblyReference.cache

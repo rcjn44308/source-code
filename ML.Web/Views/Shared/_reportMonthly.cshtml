@@ -1,0 +1,47 @@
+﻿@model ML.Web.Models.IenumerableReportResult
+
+@{
+    int x = 0;
+}
+
+<table id="forRptMonthly">
+    <tbody>
+        @foreach (var item in Model.monthlyReport)
+        {
+            <tr>
+                <td><input type="hidden" name="monthlyReport[@x].date" value="@item.date" /></td>
+                <td><input type="hidden" name="monthlyReport[@x].count" value="@item.count" /></td>
+                <td><input type="hidden" name="monthlyReport[@x].charge" value="@item.charge" /></td>
+                <td><input type="hidden" name="monthlyReport[@x].principal" value="@item.principal" /></td>
+                <td><input type="hidden" name="monthlyReport[@x].commission" value="@item.commission" /></td>
+            </tr>
+            x++;
+        }
+    </tbody>
+</table>
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead style="background-color: #eee;">
+            <tr>
+                <th><b>TRANSACTION DATE</b></th>
+                <th><b>COUNT</b></th>
+                <th><b>CHARGE</b></th>
+                <th><b>AMOUNT</b></th>
+                <th><b>COMMISSION</b></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.monthlyReport)
+            {
+                <tr>
+                    <td>@item.date</td>
+                    <td>@item.count</td>
+                    <td>@item.charge</td>
+                    <td>@item.principal</td>
+                    <td>@item.commission</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,59 @@
+﻿@using System.Web.Optimization
+
+@{
+    ViewBag.Title = "Monthly Cancellation Report";
+}
+
+<div class="col-md-12 padLefAndRight">
+    <div class="row-1">
+        <div class="panel panel-danger minheight" style="margin-top:5px">
+            <div class="panel-heading" style="background-color: #fff;">
+                <h4><b>Monthly Cancellation Report Form</b></h4>
+                <a href="#" class="pull-right" style="margin-top: -27px;" data-toggle="modal" data-target="#myModal">Need help?</a>
+            </div>
+            <div class="panel-body">
+                <div class="col-md-3 adjustPadding">
+                    <label for="drpMonth">Month</label>
+                    <select class="form-control" id="drpMonth">
+                        <option value=""></option>
+                        <option value="01">January</option>
+                        <option value="02">February</option>
+                        <option value="03">March</option>
+                        <option value="04">April</option>
+                        <option value="05">May</option>
+                        <option value="06">June</option>
+                        <option value="07">July</option>
+                        <option value="08">August</option>
+                        <option value="09">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                    </select>
+                </div>
+                <div class="col-md-3 adjustPadding">
+                    <label for="txtyear">Year</label>
+                    <input class="form-control" id="txtyear" value="@DateTime.Now.Year" />
+                </div>
+                <div class="col-md-3 adjustPadding">
+                    <button id="btnMonthlySearch" data-url="@Url.Action("MonthlyCancellationReport", "BillsPayReport")" class="btn btn-danger" style="margin-top: 21px;"><i class="glyphicon glyphicon-search"></i>  Search</button>
+                </div>
+
+                <div class="col-md-12 adjustPadding">
+                    <br />
+                    <h4 style="color: #cc0001;"><b>Search Result</b></h4>
+
+                    <div id="divResultHead" style="display:none">
+                        @{ Html.RenderPartial("_reportHead");}
+                    </div>
+                    <div id="divSearchMonthlyResult">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+@section scripts{
+    @Scripts.Render("~/bundles/reports")
+}

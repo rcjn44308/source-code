@@ -1,0 +1,111 @@
+﻿@using System.Web.Optimization
+@using Newtonsoft.Json
+@model ML.Web.Models.RegistrationModel
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_UserLoginLayout.cshtml";
+}
+
+<div class="container">
+    <div id="" class="row">
+        <div id="" class="col-sm-6 col-md-4 col-md-offset-4">
+            <div class="logo-wall"></div>
+            <div class="account-wall wiggle">
+                <form id="" class="form-signin">
+                    <h3 style="color:white">Register</h3>
+                    @*<div class="left-inner-addon">
+                        @Html.TextBoxFor(x => x.accountno, new { @onkeypress = "return isNumberKey(event)", @id = "AccountNo", @class = "form-control", @placeholder = "Account No.", @autofocus = "autofocus" })
+                        <span class="field-error-msg">
+                            @Html.ValidationMessageFor(x => x.accountno)
+                        </span>
+                    </div>
+                    <div class="left-inner-addon">
+                        @Html.TextBoxFor(x => x.CustomerID, new { @id = "CustID", @class = "form-control text-uppercase", @placeholder = "Customer ID" })
+                        <span class="field-error-msg">
+                            @Html.ValidationMessageFor(x => x.CustomerID)
+                        </span>
+                    </div>
+                    <div class="left-inner-addon">
+                        @Html.TextBoxFor(x => x.DeviseID, new { @id = "DevID", @class = "form-control text-uppercase", @placeholder = "Device ID" })
+                        <span class="field-error-msg">
+                            @Html.ValidationMessageFor(x => x.DeviseID)
+                        </span>
+                    </div>*@
+                    <div class="left-inner-addon">
+                        @Html.TextBoxFor(x => x.usrName, new { @id = "usrname", @class = "form-control", @placeholder = "ML Wallet Username", @autofocus = "autofocus" })
+                        <span class="field-error-msg">
+                            @Html.ValidationMessageFor(x => x.usrName)
+                        </span>
+                    </div>
+                    <div class="left-inner-addon">
+                        @Html.TextBoxFor(x => x.pssWord, new { @id = "pssword", @class = "form-control", @placeholder = "ML Wallet Password" })
+                        <span class="field-error-msg">
+                            @Html.ValidationMessageFor(x => x.pssWord)
+                        </span>
+                    </div>
+                    <br>
+                    <input type="button" value="Register" class="btn btn-default form-control btn-block btnRegister" />
+                    <input type="button" value="Login" onclick="location.href='@Url.Action("Login", "User")'" class="btn btn-default form-control btn-block" />
+                    @*}*@
+                    <br />
+                    <div class="text-center" style="font-size: 15px;">
+                        @*@Html.ActionLink("Create an account", "Register", "User", new { @style = "color:white;" })*@
+
+                    </div>
+                </form>
+                <div class="text-center form-signin error" style="font-size: 15px;color:white;display: none;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade my-modal" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-body">
+                <img id="loading"
+                     alt="Please wait. . ." src="@Url.Content("~/Content/Images/ajax-loader.gif")" />
+                &nbsp;&nbsp;&nbsp;Please wait. . .
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade my-modal-registered">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title modal-text">MLX Message</h4>
+            </div>
+            <div class="modal-body">
+                <label>Successfully registered!</label>
+            </div>
+            <div class="modal-footer">
+                <input type="button" value="Login" onclick="location.href='@Url.Action("Login", "User")'" class="btn btn-default form-control btn-block" />
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        window.history.forward(-1);
+    </script>
+    <script>
+        $(".btnRegister").click(function () {
+            $(".my-modal").modal("show");
+            var usrname = $('#usrname').val();
+            var pssword = $('#pssword').val();
+            $.ajax({
+                url: '@Url.Action("SubmitRegister", "User")',
+                datatype: 'json',contentTpe: 'application/json',type: 'post',cache: false, async: true,
+                data: { AccountNo: accountNo, CustomerID: custid, DevicedID: devID },
+                success: function (resp) {
+                    if (resp.rescode == 2000) { $(".my-modal").modal("hide"); $(".wiggle").effect("shake"); $(".error").html(resp.msg).show(); }
+                    else if (resp.rescode == 2001){ $(".my-modal").modal("hide"); $(".my-modal-registered").modal("show");}
+                    else { $(".my-modal").modal("hide"); }
+                },
+            });
+        });
+    </script>
+}

@@ -1,0 +1,289 @@
+﻿@using System.Web.Optimization
+@model ML.Web.Models.urlParam
+@{
+    ViewBag.Title = "View Receipt";
+}
+
+<div class="panel panel-danger">
+    <div class="panel-heading" style="background-color: #fff;">
+        <h4><b>RECEIPT FORM</b></h4>
+        <button type="button" class="btn btn-success pull-right" style="margin-top: -38px;" data-dismiss="modal"><i class="glyphicon glyphicon-print"></i> Print Receipt</button>
+    </div>
+    <div class="panel-body">
+        @Html.HiddenFor(m=>m.kptn)
+        <div class="col-md-12">
+            <img height="50" src="~/Content/Images/logored.png" alt="ml" />
+            <br />
+        </div>
+        <div id="divData" class="col-md-6" data-url="@Url.Action("GetReceiptData", "BillsPay")">
+            <table>
+                <tr style="padding-bottom:5px;">
+                    <td style="width:48%">Branch</td>
+                    <td>
+                        :&nbsp;&nbsp;&nbsp;&nbsp; 
+                        &nbsp;&nbsp;&nbsp;&nbsp; 
+                        <span id="lblbranch"></span>
+                    </td>
+                </tr>
+                <tr style="padding-bottom:5px;">
+                    <td style="width:48%">Date</td>
+                    <td>
+                        :&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <span id="lbldate"></span>
+                    </td>
+                </tr>
+                <tr>
+
+                    <td style="width:48%">Payment to</td>
+                    <td>
+                        :&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <span id="lblpayto"></span>
+                    </td>
+                </tr>
+                <tr style="padding-bottom:5px;">
+                    <td style="width:48%">Account Name</td>
+                    <td>
+                        :&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <span id="lblaccntName"></span>
+                    </td>
+                </tr>
+                <tr style="padding-bottom:5px;">
+                    <td style="width:48%">Name</td>
+                    <td>
+                        :&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <span id="lblname"></span>
+                    </td>
+                </tr>
+                <tr style="padding-bottom:5px;">
+                    <td style="width:48%">Address</td>
+                    <td>
+                        :&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <span id="lbladdress"></span>
+                    </td>
+                </tr>
+                <tr style="padding-bottom:5px;">
+                    <td style="width:48%">Contact No</td>
+                    <td>
+                        :&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <span id="lblcontact"></span>
+                    </td>
+                </tr>
+            </table>
+            <br />
+        </div>
+
+        <div class="col-md-6">
+            <table>
+                <tr style="font-size:18px;font-weight:bold">
+                    <td style="width: 39%;"><b>BP Ref No.</b></td>
+                    <td>:&nbsp;&nbsp; &nbsp;&nbsp;<b><span id="lblref"></span></b></td>
+                </tr>
+            </table>
+            <br />
+            <table>
+                <tr>
+                    <td style="width:47%">Amount Paid</td>
+                    <td>:&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <span id="lblamtpaid"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:47%">Charge</td>
+                    <td>:&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <span id="lblcharge"></span>
+                    </td>
+                </tr>
+                <tr style="font-weight:bold">
+                    <td style="width:47%">Total</td>
+                    <td>:&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <span id="lbltotal"></span>
+                    </td>
+                </tr>
+            </table>
+            @*<p>
+                <span>Amount Paid in Words</span><br />
+                <span style="padding-left: 30px;">
+                    FIVE HUNDRED PESOS ONLY
+                </span>
+            </p>*@
+        </div>
+
+        <div class="col-md-12">
+            <hr />
+            <h4 class="text-center l-font l-fontsize26 l-fontweight">MLKP TERMS AND CONDITIONS</h4>
+            <table>
+                <tr>
+                    <td style="float:left">1.)</td>
+                    <td>
+                        <p style="text-align:justify">
+                            The ML Kwarta Padala (MLKP) money transfer service is available in all M. Lhuillier Financial Services, Inc. ( MLFSI) branches nationwide and is covered by the
+                            rules of the Bangko Sentral ng Pilipinas and the AMLC and this agreement.
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="float:left">2.)</td>
+                    <td>
+                        <p style="text-align:justify">
+                            The sender must: 1) be personally present in the branch to make his transaction, 2) submit a valid ID, 3) comply with the Know Your Customer (KYC) form, 4)
+                            comply with the send form, 5) must ascertain that there is an ML branch near the receiver 6) relay all the vital information of the transaction to the receiver.
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="float:left">3.)</td>
+                    <td>
+                        <p style="text-align:justify">
+                            The sender should write the full official name of the receiver including the full middle name (no initials only). Failure to write the full middle name shall be considered
+                            as a waiver to include this information in verifying the identity of the receiver. MLFSI shall not be held liable if transaction is paid to a wrong receiver on account of a
+                            wrong middle name.
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="float:left">4.)</td>
+                    <td>
+                        <p style="text-align:justify">
+                            The sender may also direct MLFSI to forward the money to the account of the receiver with any bank, corporation, institution or entity.
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="float:left">5.)</td>
+                    <td>
+                        <p style="text-align:justify">
+                            The receiver must: 1) be personally present in the branch to claim the money, 2) submit all the vital information: Kwarta Padala Transaction Number (KPTN), his/her
+                            full name, sender's name, amount of money sent, 3) comply with the KYC form and the pay form.
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="float:left">6.)</td>
+                    <td>
+                        <p style="text-align:justify">
+                            MLFSI or any of its agents shall have the right not to accept, pay or hold the transaction if it determines that is in violation of any MLFSI policy, the AMLC rules, Child
+                            Trafficking Law and other applicable laws.
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="float:left">7.)</td>
+                    <td>
+                        <p style="text-align:justify">
+                            MLFSI accepts and pays out money transfers in cash and in Philippine Pesos only.
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="float:left">8.)</td>
+                    <td>
+                        <p style="text-align:justify">
+                            MLFSI shall not be held liable for the failure of delivery other value -added services to the main money transfer transaction like sending of SMS to the receiver and the
+                            like.
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="float:left">9.)</td>
+                    <td>
+                        <p style="text-align:justify">
+                            The receiver can claim the money in any open branch nationwide. Branches may close even without prior notices when there is failure of its technical,
+                            telecommunications and power facility, there is a threat to its security or safety, there is inclement weather and the like.
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="float:left">10.)</td>
+                    <td>
+                        <p>
+                            Cancellations are allowed upon submission of a written request, MLFSI will refund the principal amount of the money transfer only.
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="float:left">11.)</td>
+                    <td>
+                        <p style="text-align:justify">
+                            Changes to the original details of the send transaction may be made only by the sender upon submission of the following: 1) written request, 2) the valid ID used in
+                            the original send transaction, 3) original send form, 4) payment for the service charge for the request.
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="float:left">12.)</td>
+                    <td>
+                        <p style="text-align:justify">
+                            MLFSI shall deduct a service fee of FIVE HUNDRED PESOS (P500) per month from money transfers that are not picked up after one month from the time it was
+                            sent.
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="float:left">13.)</td>
+                    <td>
+                        <p style="text-align:justify">
+                            In no event shall MLFSI or any of its agents be liable for damages beyond the sum of FIVE THOUSAND PESOS (P5,000) for the delay, nonpayment of this money
+                            transfer, whether caused by negligence on the part of its employees or agents or otherwise, in addition to the refund of the principal amount of the money sent and the
+                            service fee.
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="float:left">14.)</td>
+                    <td>
+                        <p style="text-align:justify">
+                            All claims or suits regarding this transaction shall be filed in the courts of Cebu City only.
+                        </p>
+
+                    </td>
+                </tr>
+            </table>
+            <br />
+            <p style="text-align:center">
+                @*@Html.DisplayFor(m => m.AgentAdd)*@
+            </p>
+            <div>
+                <hr />
+                <button type="button" class="btn btn-success pull-right" data-dismiss="modal"><i class="glyphicon glyphicon-print"></i> Print Receipt</button>
+            </div>
+        </div>
+
+        
+    </div>
+</div>
+
+
+<div class="modal fade exportPDF" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content border-disabler">
+            <div class="modal-header modal-color">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title KYC-font"><b>Print to PDF</b></h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    The viewer must export to PDF to print. Choose the Print option from the PDF reader application once the document is opened. Note: You must have a PDF reader installed to print. (eg. Adobe Reader)
+                </p>
+
+            </div>
+            <div class="modal-footer">
+                <span id="btndownload" class="btn btn-success btn-green btn-sm fileinput-button">
+                    <i class="glyphicon glyphicon-download-alt"></i>
+                    <span>Export PDF</span>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    @Scripts.Render("~/bundles/receipt")
+}

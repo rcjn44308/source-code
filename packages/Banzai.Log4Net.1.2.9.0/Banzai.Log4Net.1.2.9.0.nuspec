@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Banzai.Log4Net</id>
+    <version>1.2.9.0</version>
+    <title>Banzai.Log4Net</title>
+    <authors>eric_swann</authors>
+    <owners>eric_swann</owners>
+    <projectUrl>https://github.com/eswann/Banzai</projectUrl>
+    <iconUrl>http://upload.wikimedia.org/wikipedia/commons/0/03/Empty_wave_at_Banzai_Pipeline.jpeg</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Log4Net Library for Banzai</description>
+    <summary>Enables Banzai to log to Log4Net.</summary>
+    <copyright>Copyright 2014 Eric Swann, et. al. - All rights reserved.</copyright>
+    <language />
+    <tags>Banzai Pipeline Dataflow Workflow Log4Net</tags>
+    <dependencies>
+      <dependency id="Banzai" version="1.2.9.0" />
+      <dependency id="log4net" version="2.0.3" />
+    </dependencies>
+  </metadata>
+</package>

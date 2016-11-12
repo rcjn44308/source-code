@@ -1,0 +1,39 @@
+﻿@using System.Web.Optimization
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/Site")
+    @Styles.Render("~/Content/style")
+    @RenderSection("styles", required: false)
+    @Scripts.Render("~/bundles/modernizr")
+    <link rel="shortcut icon" href="~/Content/Images/favicon.png" />
+    <style type="text/css">
+        body {
+            background: #F4F0EF;
+            font-size: 12px;
+        }
+    </style>
+    <!--
+    *=*=         =*=* *=       *=      *= *=       =* *====* *=       *=       *====* *=******* *=*****
+    *= *=       =* =* *=       *=      *= *=       =* *====* *=       *=       *====* *======== *====== *
+    *=  *=     =*  =* *=       *=      *= *=       =*   ==   *=       *=         ==   *=        *=     = *
+    *=   *=   =*   =* *=       *=      *= *=       =*   ==   *=       *=         ==   *=   **   *=     = *
+    *=    *= =*    =* *=       *=*******= *=       =*   ==   *=       *=         ==   *===***   *====== *
+    *=     *=*     =* *=       *=======*= *=       =*   ==   *=       *=         ==   *===***   *=******
+    *=      *      =* *=       *=      *= *=       =*   ==   *=       *=         ==   *=        *=   *=
+    *=             =* *=****** *=      *= * = = = = * *====* *=****** *=****** *====* *=******* *=    *=
+    *=             =* *======= *=      *=  * * * * *  *====* *======= *======= *====* *======== *=     *=
+    -->
+</head>
+<body>
+    @RenderBody()
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jquery-ui")
+    @Scripts.Render("~/bundles/mlauth")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

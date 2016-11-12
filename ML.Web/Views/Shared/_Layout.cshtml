@@ -1,0 +1,185 @@
+﻿@using System.Web.Optimization
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" charset="UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/Site")
+    @Styles.Render("~/Content/style")
+    <link href="~/Content/Styling.css" rel="stylesheet" />
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/jquery.steps.css" rel="stylesheet" />
+    <link href="~/Content/checknet.css" rel="stylesheet" />
+    @*<link href="~/Content/bootstrap-checkbox.css" rel="stylesheet" />*@
+    <link rel="shortcut icon" href="~/Content/Images/favicon.png" />
+    <style type="text/css">
+        body {
+            background: #F4F0EF;
+            font-size: 12px;
+        }
+    </style>
+    <!--
+    *=*=         =*=* *=       *=      *= *=       =* *====* *=       *=       *====* *=******* *=*****
+    *= *=       =* =* *=       *=      *= *=       =* *====* *=       *=       *====* *======== *====== *
+    *=  *=     =*  =* *=       *=      *= *=       =*   ==   *=       *=         ==   *=        *=     = *
+    *=   *=   =*   =* *=       *=      *= *=       =*   ==   *=       *=         ==   *=   **   *=     = *
+    *=    *= =*    =* *=       *=*******= *=       =*   ==   *=       *=         ==   *===***   *====== *
+    *=     *=*     =* *=       *=======*= *=       =*   ==   *=       *=         ==   *===***   *=******
+    *=      *      =* *=       *=      *= *=       =*   ==   *=       *=         ==   *=        *=   *=
+    *=             =* *=****** *=      *= * = = = = * *====* *=****** *=****** *====* *=******* *=    *=
+    *=             =* *======= *=      *=  * * * * *  *====* *======= *======= *====* *======== *=     *=
+    -->
+
+</head>
+<body>
+    @Html.Partial("Header")
+    <div class="container-fluid">
+        <div class="col-md-12" style="min-height: 100%; background-color: #eeeeee; border-radius: 3px; margin-top: -31px; padding-top: 24px;">
+            <div class="col-md-2" id="divSidebar" style="margin-top:5px">
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <h4><b>Wallet Information</b></h4>
+                    </div>
+                    <div id="divRefreshAccount" class="panel-body" data-url="@Url.Action("refBalance", "Home")">
+                        <div style="text-align:center">
+                            <p>
+                                <b style="font-size: 18px; color: #417936;"><i class="glyphicon glyphicon-briefcase"></i> Balance </b> <br />
+                                <b id="bRunningBalance" style="font-size: 15px; color: #cc0001; display: none"></b>
+                                <b id="bRefreshBal" style="padding-left: 15px;display:none"> <img src="~/images/load1.gif" alt="loading" /> Refreshing... </b>
+                            </p>
+                            <p>
+                                <b style="font-size: 18px; color: #417936;"><i class="glyphicon glyphicon-lock"></i> Account No. </b>
+                                <b style="font-size: 15px; color: #cc0001;"> 16040000000303</b>
+                            </p>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-10" id="divNet">
+                @RenderBody()
+
+            </div>
+        </div>
+    </div>
+    <!-- result modal-->
+    <div class="modal fade enumerablemodal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog">
+        <div id="divDialogEnumModal" class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #eeeeee;">
+                    <h4 style="color: #cc0001;"><b id="resulthead"></b></h4>
+                </div>
+                <div class="panel-body">
+                    <div id="modalDivMsg"> </div>
+                </div>
+                <div class="modal-footer" style="background-color: #eee;">
+                    <div id="btnenumerablemodal"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Result modal-->
+    <!-- Msg modal-->
+    <div class="modal fade modalmsg" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #eeeeee;">
+                    <h4 style="color: #cc0001;"><b id="msgHead"></b></h4>
+                </div>
+                <div class="panel-body">
+                    <div style="text-align:center"><b style="color:red"><span id="msgBody"></span></b></div>
+                </div>
+                <div class="modal-footer" style="background-color: #eee;">
+                    <div id="msgButtons"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Result modal-->
+    <!--Modal Inactivity-->
+    <div class="modal fade modal-inactivity" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header border-disabler">
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div id="divInactivity" style="display:none">
+                    <div class="modal-body">
+                        <div style="text-align:center">
+                            <p class="l-fontsize18" style="color:red">Your Session is about to expire!</p>
+                            <p>
+                                You will be logged out in <b style="font-size:14px;color:red"><span id="timer" style="font-size:12px"></span> seconds</b>.
+                            </p>
+                            <p>Do you want to stay signed in?</p>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-sm btn-success" onclick="window.location.reload()" data-dismiss="modal">Yes, Keep me signed in</button>
+                        <input type="button" value="No, Sign me out" class="btn btn-sm btn-danger btnLogout" data-action="@Url.Action("Logout", "User")" data-for-desktop-action="@Url.Action("SoLogout", "User")" />
+                    </div>
+                </div>
+                <div id="divLogout" style="display:none">
+                    <div class="modal-body">
+                        <div style="text-align:center">
+                            <p class="l-fontsize18" style="color:red">Are you sure you want to logout?</p>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Cancel</button>
+                        <input type="button" value="Confirm" class="btn btn-sm btn-success btnLogout" data-action="@Url.Action("Logout", "User")" data-for-desktop-action="@Url.Action("PoLogout", "User")" />
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--End Modal-->
+    <!--Modal Animated Loading...-->
+    <div class="modal fade my-modal" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-sm" style="text-align: center;margin-top: 192px;">
+            <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate" style="color: white;font-size: 25px;"></span>
+            <br>
+            <label id="loadmsg" style="margin-bottom: 0px;color: white;">Please wait...</label>
+        </div>
+    </div>
+    <!--End Modal-->
+    <!--Modal Animated Loading...-->
+    <div class="modal fade my-modal1" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
+                    <label id="loadmsg" style="margin-bottom: 0px;"></label>
+                    @*<div style="background-color:#fff;">
+                        <b style="padding-left: 15px;"> <img src="~/images/load1.gif" alt="loading" /> Please wait... </b>
+                    </div>*@
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--End Modal-->
+    <footer class="footer">
+        <div class="contained">
+            <p class="fontWhite text-muter">M. Lhuillier Financial Services, Inc. All Rights Reserved @DateTime.Now.Year.</p>
+        </div>
+    </footer>
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jquery-ui")
+    @Scripts.Render("~/bundles/myjs")
+    @Scripts.Render("~/bundles/submenu")
+    @Scripts.Render("~/bundles/sessionjs")
+    @Scripts.Render("~/bundles/common")
+    @Scripts.Render("~/bundles/modalsteps")
+    @*<script src="~/Scripts/bootstrap-checkbox.js"></script>*@
+    @RenderSection("scripts", required: false)
+    <script src="~/Scripts/internetcontrol/jquery.checknet-1.6.min.js"></script>
+</body>
+</html>

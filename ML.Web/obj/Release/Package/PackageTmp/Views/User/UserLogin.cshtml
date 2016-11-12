@@ -1,0 +1,180 @@
+﻿@using System.Web.Optimization
+@using Newtonsoft.Json
+@model ML.Web.Models.LoginViewModel
+@{
+    ViewBag.Title = "UserLogin";
+    Layout = "~/Views/Shared/_UserLoginLayout.cshtml";
+}
+<div class="container">
+    <div class="col-md-4 col-md-offset-4 login-head text-center login-top" style="border-radius:2px">
+        <img src="Content/Images/MLExpress.png" class="img-responsive" style="width: 45px; float: left; margin-top: 9px;">
+        <div style="margin-right: 50px">
+            <span>Member Login Form</span>
+        </div>
+    </div>
+
+    <div class="col-md-4 col-md-offset-4 login-class" style="border-radius:2px">
+
+        <div class="logo-property">
+            <img src="Content/Images/Lock.png" style="margin-left: 18px; display: block; max-width: 75%; height: auto; ">
+        </div>
+        <div style="text-align: center">
+            <span style="color:white; font-size:14px;">ML Express Bills Payment</span>
+        </div>
+        <div class="wiggle">
+            @using (Ajax.BeginForm("Authenticate", "User", null,
+                                        new AjaxOptions { HttpMethod = "POST", OnSuccess = "onSubmitSuccess", OnBegin = "onSubmitBegin", OnFailure = "onFail" }, new { @class = "form-signin" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon form-prop-add"><span class="glyphicon glyphicon-user"></span></div>
+                        @Html.TextBoxFor(x => x.Username, new { @id = "loginname", @class = "form-control form-prop", @placeholder = "Username", @autofocus = "autofocus" })
+                        <span class="field-error-msg">
+                            @Html.ValidationMessageFor(x => x.Username)
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon form-prop-add"><span class="glyphicon glyphicon-lock"></span></div>
+                        @Html.PasswordFor(x => x.Password, new { @id = "loginpass", @class = "form-control form-prop", @placeholder = "Password" })
+                        <span class="field-error-msg">
+                            @Html.ValidationMessageFor(x => x.Password)
+                        </span>
+                    </div>
+                </div>
+                @Html.HiddenFor(x => x.RedirectUrl)
+                @Html.HiddenFor(x => x.dvid, new { @id = "uqid" })
+                @Html.HiddenFor(x => x.cellNum)
+                @Html.HiddenFor(x => x.longt)
+                @Html.HiddenFor(x => x.lat)
+                @Html.HiddenFor(x => x.loc)
+                @Html.HiddenFor(x => x.vrsn, new { @id = "uqvs" })
+                <div class="btn-bot-marg">
+                    <button type="submit" class="btn btn-rr btnlogin"> SIGN IN</button>
+                </div>
+                <div class="text-center form-signin error" style="font-size: 15px;color:white;display: none;"></div>
+                <span class="pull-left check-version" style="color: #E02A2A; padding: 8px 0px 0px 5px;display: none">
+                    <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
+                    Check Version...
+                </span>
+                <span class="pull-left" style="color: #FFFFFF; padding: 8px 0px 0px 5px;display:none" id="spanUpdate" data-action="@Url.Action("checkVersion", "User")"></span>
+                <a data-toggle="modal" data-target=".Download-Updates" class="pull-right" style="color: #60E64A; cursor: default; padding: 8px 9px 0px 0px;"><b><i class="glyphicon glyphicon-refresh"></i>Check for updates</b></a>
+                <br />
+                <div class="text-center" style="font-size: 15px;">
+                </div>
+            }
+
+        </div>
+    </div>
+    <div class="modal fade my-modal" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
+                    Loading...
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade locked" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-body">
+                <br />
+                <div><p><span class="l-fontsize14" id="lockedMSG"></span></p></div>
+                <p>
+                    <b>Call:</b> (032)232-1036 or (032)231-8626 <br />
+                    <b>SMS:</b> 0947-9992754 or 0947-9992755 <br />
+                    <b>Email:</b> helpdesk@mlhuillier1.com or visit to your nearest branch
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-success btn-green" data-dismiss="modal">Okay</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style type="text/css">
+    .c-marg {
+        margin-left: 15px;
+        font-size: 14px;
+    }
+
+    .c-pad {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .cont {
+        display: none;
+    }
+
+    .drop-container article {
+        background: transparent;
+        margin-top: 0;
+        overflow: hidden;
+        max-height: 0;
+        position: relative;
+        z-index: 10;
+        transition: max-height 0.8s ease-in-out, margin 0.08s linear,;
+    }
+
+    .drop-container input:checked ~ article {
+        transition: max-height 0.8s ease-in-out, margin 0.08s linear,;
+    }
+
+        .drop-container input:checked ~ article.drop-small {
+            max-height: 600px;
+            margin: 0px;
+        }
+</style>
+
+<div id="divCheckUpdate" class="modal fade Download-Updates" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header border-disabler modal-color">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title KYC-font">Download Updates</h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <section class="drop-container">
+                        <div>
+                            <span><b>Latest Version : </b></span><b id="latestVersion" style="color:red"></b><br />
+                            <input id="drop-1" name="dropdown-1" type="checkbox" class="cont" />
+                            <label for="drop-1"><span class="btn btndanger c-marg gly-sign"><i class="glyphicon glyphicon-chevron-down"> </i></span><span>Version Updates</span></label>
+                            <article class="drop-small c-pad">
+                                <div>
+                                    <ul id="vsDetails"></ul>
+                                </div>
+                            </article>
+                        </div>
+                    </section>
+                </div>
+
+                <div><span> Let's Make sure your <b style="color:red">ML Express Payout </b> is up to date</span></div>
+                <br />
+                <button id="btnDownloadUpdates" data-action="@Url.Action("downloadApk", "User")" class="btn btn-success" style="margin-left: 60px;">Download Updates</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade error-catch" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-body">
+                <br />
+                <div><p><span class="l-fontsize14" id="errorMSG"></span></p></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-success btn-green" data-dismiss="modal">Okay</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,67 @@
+﻿@model ML.Web.Models.CancelBillsPayViewModel
+
+<div class="col-md-4">
+    <label>Date</label>
+    @Html.TextBoxFor(m => m.date, new { @class = "form-control text-uppercase", @readonly = "@readonly" })
+</div>
+<div class="col-md-4">
+    <label>Operator</label>
+    @Html.TextBoxFor(m => m.Operator, new { @class = "form-control text-uppercase", @readonly = "@readonly" })
+</div>
+<div class="col-md-4">
+    <label>Control No</label>
+    @Html.TextBoxFor(m => m.ControlNo, new { @class = "form-control text-uppercase", @readonly = "@readonly" })
+</div>
+
+<div class="col-md-4">
+    <h4 style="color: #cc0001;"><b>Account Information</b></h4>
+    <br />
+    <label>Company</label>
+    @Html.TextAreaFor(m => m.compName, new { @class = "form-control text-uppercase", @style = "resize:none"})
+    <label>Account No</label>
+    @Html.TextBoxFor(m => m.Accountno, new { @class = "form-control text-uppercase" })
+    <label>Last name</label>
+    @Html.TextBoxFor(m => m.compLname, new { @class = "form-control text-uppercase" })
+    <label>First name</label>
+    @Html.TextBoxFor(m => m.compFname, new { @class = "form-control text-uppercase" })
+    <label>Middle name</label>
+    @Html.TextBoxFor(m => m.compMname, new { @class = "form-control text-uppercase" })
+</div>
+<div class="col-md-4">
+    <h4 style="color: #cc0001;"><b>Payor Information</b></h4>
+    <br />
+    <label>Last name</label>
+    @Html.TextBoxFor(m => m.Lastname, new { @class = "form-control text-uppercase" })
+    <label>First name</label>
+    @Html.TextBoxFor(m => m.Firstname, new { @class = "form-control text-uppercase" })
+    <label>Middle name</label>
+    @Html.TextBoxFor(m => m.Middlename, new { @class = "form-control text-uppercase" })
+    <label>Contact No</label>
+    @Html.TextBoxFor(m => m.contactNo, new { @class = "form-control text-uppercase" })
+    <label>Address</label>
+    @Html.TextAreaFor(m => m.Address, new { @class = "form-control text-uppercase", @style = "resize:none"})
+</div>
+<div class="col-md-4">
+    <h4 style="color: #cc0001;"><b>Payment Information</b></h4>
+    <br />
+    <label>Amount Paid</label>
+    @Html.TextBoxFor(m => m.AmountPaid, new { @class = "form-control text-uppercase", @readonly = "@readonly" })
+    <label>Cancellation Charge</label>
+    @Html.TextBoxFor(m => m.CancellationCharge, new { @class = "form-control text-uppercase", @readonly = "@readonly" })
+    <label>Other Details</label>
+    @Html.TextAreaFor(m => m.OtherDetails, new { @class = "form-control text-uppercase", @style = "resize:none"})
+    <br /><br />
+    <label>Reason</label>&nbsp; <label style="color: #b53536"><i class="glyphicon glyphicon-pencil"></i>Required fields!</label>
+    @Html.TextAreaFor(m => m.reason, new { @class = "form-control text-uppercase", @style = "resize:none" })
+</div>
+<script>
+    $(document).ready(function () {
+        var cancelType = $('#txtCancellationType').val();
+        if (cancelType == 0) {
+            $('input').prop("readonly", true);
+            document.getElementById("compName").readOnly = true;
+            document.getElementById("Address").readOnly = true;
+            document.getElementById("OtherDetails").readOnly = true;
+        }
+    });
+</script>

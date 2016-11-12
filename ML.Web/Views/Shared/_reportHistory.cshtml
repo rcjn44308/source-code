@@ -1,0 +1,55 @@
+﻿@model ML.Web.Models.IenumerableReportResult
+@{
+    int x = 0;
+}
+
+<table id="forRptHistory">
+    <tbody>
+        @foreach (var item in Model.HistoryReport)
+        {
+            <tr>
+                <td><input type="hidden" name="HistoryReport[@x].No" value="@item.No" /></td>
+                <td><input type="hidden" name="HistoryReport[@x].TransDate" value="@item.TransDate" /></td>
+                <td><input type="hidden" name="HistoryReport[@x].Description" value="@item.Description" /></td>
+                <td><input type="hidden" name="HistoryReport[@x].Debit" value="@item.Debit" /></td>
+                <td><input type="hidden" name="HistoryReport[@x].Credit" value="@item.Credit" /></td>
+                <td><input type="hidden" name="HistoryReport[@x].Balance" value="@item.Balance" /></td>
+                <td><input type="hidden" name="HistoryReport[@x].Operator" value="@item.Operator" /></td>
+            </tr>
+            x++;
+        }
+    </tbody>
+</table>
+
+<div class="table-responsive" style="overflow:scroll; max-height:300px;">
+    <table id="tblHistoryReport" class="table table-striped">
+        <thead style="background-color: #eee;">
+            <tr>
+                <th><b>No</b></th>
+                <th><b>TransDate</b></th>
+                <th><b>Description</b></th>
+                <th><b>Debit</b></th>
+                <th><b>Credit</b></th>
+                <th><b>Balance</b></th>
+                <th><b>Operator</b></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.HistoryReport != null)
+            {
+                foreach (var item in Model.HistoryReport)
+                {
+                    <tr>
+                        <td>@item.No</td>
+                        <td>@item.TransDate</td>
+                        <td>@item.Description</td>
+                        <td>@String.Format("{0:N}", @item.Debit)</td>
+                        <td>@String.Format("{0:N}", @item.Credit)</td>
+                        <td>@String.Format("{0:N}", @item.Balance)</td>
+                        <td>@item.Operator</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,1733 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Banzai</name>
+    </assembly>
+    <members>
+        <member name="M:Banzai.IExecutionContext`1.AddResult(Banzai.NodeResult)">
+            <summary>
+            Adds a result to the execution context.
+            </summary>
+            <param name="result">The result to add</param>
+        </member>
+        <member name="M:Banzai.IExecutionContext`1.ChangeSubject(System.Object)">
+            <summary>
+            Changes the current subject to the instance provided.
+            </summary>
+            <param name="subject">The new subject.</param>
+        </member>
+        <member name="P:Banzai.IExecutionContext`1.Subject">
+            <summary>
+            The subject that the workflow operates on.
+            </summary>
+        </member>
+        <member name="P:Banzai.IExecutionContext`1.State">
+            <summary>
+            A dynamic object of additional state that must be passed through the workflow.
+            </summary>
+        </member>
+        <member name="P:Banzai.IExecutionContext`1.GlobalOptions">
+            <summary>
+            The global options that this node is using for execution
+            </summary>
+            <remarks>This uses the global options if no node-specific options are specified.</remarks>
+        </member>
+        <member name="P:Banzai.IExecutionContext`1.ParentResult">
+            <summary>
+            Rollup of this result and all results under this result
+            </summary>
+        </member>
+        <member name="P:Banzai.IExecutionContext`1.CancelProcessing">
+            <summary>
+            Cancels further processing of the flow.
+            </summary>
+        </member>
+        <member name="T:Banzai.ExecutionContext`1">
+            <summary>
+            This execution context is passed down the chain during execution so that child nodes can base decisions on 
+            context created globally or mutated by previous nodes.
+            </summary>
+            <typeparam name="T">Type of the subject that the nodes operate on.</typeparam>
+        </member>
+        <member name="M:Banzai.ExecutionContext`1.#ctor(`0,Banzai.ExecutionOptions,Banzai.NodeResult)">
+            <summary>
+            Creates a new execution context.
+            </summary>
+            <param name="subject">Subject of the current flow.</param>
+            <param name="globalOptions">Global options of the current flow.</param>
+            <param name="rootResult">Root result if one has already been established.</param>
+        </member>
+        <member name="M:Banzai.ExecutionContext`1.#ctor(Banzai.IExecutionContext{`0},Banzai.NodeResult)">
+            <summary>
+            Creates a child context based on the parent context.  Used for nesting multi-nodes inside of other nodes.
+            </summary>
+            <param name="parentContext">Parent of this context.</param>
+            <param name="parentResult">Parent result to set on the new context, if any.</param>
+        </member>
+        <member name="M:Banzai.ExecutionContext`1.ChangeSubject(System.Object)">
+            <summary>
+            Changes the current subject to the instance provided.
+            </summary>
+            <param name="subject">The new subject.</param>
+        </member>
+        <member name="M:Banzai.ExecutionContext`1.AddResult(Banzai.NodeResult)">
+            <summary>
+            Adds a result to the execution context.
+            </summary>
+            <param name="result">The result to add</param>
+        </member>
+        <member name="P:Banzai.ExecutionContext`1.Subject">
+            <summary>
+            The subject that the workflow operates on.
+            </summary>
+        </member>
+        <member name="P:Banzai.ExecutionContext`1.State">
+            <summary>
+            A dynamic object of additional state that must be passed through the workflow.
+            </summary>
+        </member>
+        <member name="P:Banzai.ExecutionContext`1.GlobalOptions">
+            <summary>
+            The global options that this node is using for execution
+            </summary>
+            <remarks>This uses the global options if no node-specific options are specified.</remarks>
+        </member>
+        <member name="P:Banzai.ExecutionContext`1.ParentResult">
+            <summary>
+            Rollup of this result and all results under this result
+            </summary>
+        </member>
+        <member name="P:Banzai.ExecutionContext`1.CancelProcessing">
+            <summary>
+            Cancels further processing of the flow.
+            </summary>
+        </member>
+        <member name="T:Banzai.Factories.FlowBuilder`1">
+            <summary>
+            Root class for building flows.
+            </summary>
+            <typeparam name="T">Subject type for the flow to build.</typeparam>
+        </member>
+        <member name="M:Banzai.Factories.FlowBuilder`1.#ctor(Banzai.Factories.IFlowRegistrar)">
+            <summary>
+            Constructs a new FlowBuilder.
+            </summary>
+            <param name="flowRegistrar">A registrar typically provided by a DI container that this flow can be registered with.</param>
+        </member>
+        <member name="M:Banzai.Factories.FlowBuilder`1.CreateFlow(System.String)">
+            <summary>
+            Creates a flow of the specified name and current subject type (T).
+            </summary>
+            <param name="name">Name of the flow.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Banzai.Factories.FlowBuilder`1.Register">
+            <summary>
+            Registers the flow with the IFlowRegistrar.
+            </summary>
+        </member>
+        <member name="T:Banzai.Factories.FlowComponent`1">
+            <summary>
+            Represents the definition of a flow component. Can represent a flow or a node.
+            </summary>
+        </member>
+        <member name="M:Banzai.Factories.FlowComponent`1.AddChild(Banzai.Factories.FlowComponent{`0})">
+            <summary>
+            Adds a child to this FlowComponent.
+            </summary>
+            <param name="child">Child to add.</param>
+            <returns>Updated FlowComponent.</returns>
+        </member>
+        <member name="M:Banzai.Factories.FlowComponent`1.SetShouldExecute(System.Func{Banzai.IExecutionContext{`0},System.Boolean})">
+            <summary>
+            Adds a ShouldExecute to the FlowComponent (to be added to the resultant node).
+            </summary>
+            <param name="shouldExecuteFunc">Function to add as ShouldExecute to the flowcomponent.</param>
+            <returns>The current FlowComponent instance.</returns>
+        </member>
+        <member name="M:Banzai.Factories.FlowComponent`1.SetShouldExecuteAsync(System.Func{Banzai.IExecutionContext{`0},System.Threading.Tasks.Task{System.Boolean}})">
+            <summary>
+            Adds a ShouldExecuteAsync to the FlowComponent (to be added to the resultant node).
+            </summary>
+            <param name="shouldExecuteFuncAsync">Function to add as ShouldExecute to the flowcomponent.</param>
+            <returns>The current FlowComponent instance.</returns>
+        </member>
+        <member name="P:Banzai.Factories.FlowComponent`1.Type">
+            <summary>
+            Type of the node if this represents a node or in a flow the subject type.
+            </summary>
+        </member>
+        <member name="P:Banzai.Factories.FlowComponent`1.Name">
+            <summary>
+            Name of the node or flow.
+            </summary>
+        </member>
+        <member name="P:Banzai.Factories.FlowComponent`1.IsFlow">
+            <summary>
+            Indicates whether or not this component represents a flow or a node.
+            </summary>
+        </member>
+        <member name="P:Banzai.Factories.FlowComponent`1.Children">
+            <summary>
+            Children of this definition.
+            </summary>
+        </member>
+        <member name="P:Banzai.Factories.FlowComponent`1.ShouldExecuteFunc">
+            <summary>
+            Allows the ShouldExecuteFunc for this FlowComponent to be retrieved.
+            </summary>
+        </member>
+        <member name="P:Banzai.Factories.FlowComponent`1.ShouldExecuteFuncAsync">
+            <summary>
+            Allows the ShouldExecuteFuncAsync for this FlowComponent to be retrieved.
+            </summary>
+        </member>
+        <member name="T:Banzai.Factories.IFlowBuilder`1">
+            <summary>
+            Allows the construction of a root flow.
+            </summary>
+            <typeparam name="T">Type of the flow subject.</typeparam>
+        </member>
+        <member name="M:Banzai.Factories.IFlowBuilder`1.AddRoot``1(System.String)">
+            <summary>
+            Adds a child node to this flow.
+            </summary>
+            <typeparam name="TNode">Type of the node to add.</typeparam>
+            <param name="name">Optional name of the node if needed to find in IOC container.</param>
+            <returns>The current FlowComponentBuilder instance.</returns>
+        </member>
+        <member name="M:Banzai.Factories.IFlowBuilder`1.AddRoot(System.Type,System.String)">
+            <summary>
+            Adds a child node to this flow.
+            </summary>
+            <param name="nodeType">Type of the node to add.</param>
+            <param name="name">Optional name of the node if needed to find in IOC container.</param>
+            <returns>The current FlowComponentBuilder instance.</returns>
+        </member>
+        <member name="T:Banzai.Factories.IFlowComponentBuilder`1">
+            <summary>
+            Allows the addition of flow components (nodes or subflows) to a parent flow or component.
+            </summary>
+            <typeparam name="T">Type of the flow subject.</typeparam>
+        </member>
+        <member name="M:Banzai.Factories.IFlowComponentBuilder`1.AddFlow(System.String)">
+            <summary>
+            Adds a previously registered flow by name as a child of this node.
+            </summary>
+            <param name="name">The name of the flow to add.</param>
+            <returns>The current FlowComponentBuilder instance.</returns>
+        </member>
+        <member name="M:Banzai.Factories.IFlowComponentBuilder`1.AddChild``1(System.String)">
+            <summary>
+            Adds a child node to this flow.
+            </summary>
+            <typeparam name="TNode">Type of the node to add.</typeparam>
+            <param name="name">Optional name of the node if needed to find in IOC container.</param>
+            <returns>The current FlowComponentBuilder instance.</returns>
+        </member>
+        <member name="M:Banzai.Factories.IFlowComponentBuilder`1.AddChild(System.Type,System.String)">
+            <summary>
+            Adds a child node to this flow.
+            </summary>
+            <param name="nodeType">Type of the node to add.</param>
+            <param name="name">Optional name of the node if needed to find in IOC container.</param>
+            <returns>The current FlowComponentBuilder instance.</returns>
+        </member>
+        <member name="M:Banzai.Factories.IFlowComponentBuilder`1.SetShouldExecute(System.Func{Banzai.IExecutionContext{`0},System.Boolean})">
+            <summary>
+            Adds a ShouldExecute to the flowcomponent (to be added to the resultant node).
+            </summary>
+            <param name="shouldExecuteFunc">Function to add as ShouldExecute to the flowcomponent.</param>
+            <returns>The current FlowComponentBuilder instance.</returns>
+        </member>
+        <member name="M:Banzai.Factories.IFlowComponentBuilder`1.SetShouldExecuteAsync(System.Func{Banzai.IExecutionContext{`0},System.Threading.Tasks.Task{System.Boolean}})">
+            <summary>
+            Adds a ShouldExecuteAsync to the flowcomponent (to be added to the resultant node).
+            </summary>
+            <param name="shouldExecuteFuncAsync">Function to add as ShouldExecute to the flowcomponent.</param>
+            <returns>The current FlowComponentBuilder instance.</returns>
+        </member>
+        <member name="M:Banzai.Factories.IFlowComponentBuilder`1.ForChild``1(System.String,System.Int32)">
+            <summary>
+            Returns an instance of FlowComponent representing the requested child node.
+            </summary>
+            <typeparam name="TNode">Type of the node.</typeparam>
+            <param name="name">Optional name of the node in IOC registration.</param>
+            <param name="index">Index of the node if multiple matches are found in the parent.  Defaults to first.</param>
+            <returns>A builder for the located child FlowComponent of this FlowComponent.</returns>
+        </member>
+        <member name="M:Banzai.Factories.IFlowComponentBuilder`1.ForChild(System.Type,System.String,System.Int32)">
+            <summary>
+            Returns an instance of FlowComponent representing the requested child node.
+            </summary>
+            <param name="nodeType">Type of the node.</param>
+            <param name="name">Optional name of the node in IOC registration.</param>
+            <param name="index">Index of the node if multiple matches are found in the parent.  Defaults to first.</param>
+            <returns>A builder for the located child FlowComponent of this FlowComponent.</returns>
+        </member>
+        <member name="M:Banzai.Factories.IFlowComponentBuilder`1.ForChildFlow(System.String,System.Int32)">
+            <summary>
+            Returns an instance of FlowComponentBuilder representing the requested child flow.
+            </summary>
+            <param name="name">Optional name of the node in IOC registration.</param>
+            <param name="index">Index of the node if multiple matches are found in the parent.  Defaults to first.</param>
+            <returns>A child FlowComponentBuilder of this FlowComponentBuilder.</returns>
+        </member>
+        <member name="T:Banzai.Factories.FlowComponentBuilder`1">
+            <summary>
+            Allows the addition of flow components (nodes or subflows) to a parent flow or component.
+            Also underlies the FlowBuilder.
+            </summary>
+            <typeparam name="T">Type of the flow subject.</typeparam>
+        </member>
+        <member name="M:Banzai.Factories.FlowComponentBuilder`1.#ctor(Banzai.Factories.FlowComponent{`0})">
+            <summary>
+            Constructs a new FlowComponentBuilder.
+            </summary>
+            <param name="component">FlowComponent to build up.</param>
+        </member>
+        <member name="M:Banzai.Factories.FlowComponentBuilder`1.AddFlow(System.String)">
+            <summary>
+            Adds a previously registered flow by name as a child of this node.
+            </summary>
+            <param name="name">The name of the flow to add.</param>
+            <returns>The current FlowComponentBuilder instance.</returns>
+        </member>
+        <member name="M:Banzai.Factories.FlowComponentBuilder`1.AddRoot``1(System.String)">
+            <summary>
+            Adds a root node to this flow.
+            </summary>
+            <typeparam name="TNode">Type of the node to add.</typeparam>
+            <param name="name">Optional name of the node if needed to find in IOC container.</param>
+            <returns>The current FlowComponentBuilder instance.</returns>
+        </member>
+        <member name="M:Banzai.Factories.FlowComponentBuilder`1.AddRoot(System.Type,System.String)">
+            <summary>
+            Adds a child node to this flow.
+            </summary>
+            <param name="nodeType">Type of the node to add.</param>
+            <param name="name">Optional name of the node if needed to find in IOC container.</param>
+            <returns>The current FlowComponentBuilder instance.</returns>
+        </member>
+        <member name="M:Banzai.Factories.FlowComponentBuilder`1.AddChild``1(System.String)">
+            <summary>
+            Adds a child node to this flow.
+            </summary>
+            <typeparam name="TNode">Type of the node to add.</typeparam>
+            <param name="name">Optional name of the node if needed to find in IOC container.</param>
+            <returns>The current FlowComponentBuilder instance.</returns>
+        </member>
+        <member name="M:Banzai.Factories.FlowComponentBuilder`1.AddChild(System.Type,System.String)">
+            <summary>
+            Adds a child node to this flow.
+            </summary>
+            <param name="nodeType">Type of the node to add.</param>
+            <param name="name">Optional name of the node if needed to find in IOC container.</param>
+            <returns>The current FlowComponentBuilder instance.</returns>
+        </member>
+        <member name="M:Banzai.Factories.FlowComponentBuilder`1.SetShouldExecute(System.Func{Banzai.IExecutionContext{`0},System.Boolean})">
+            <summary>
+            Adds a ShouldExecute to the FlowComponent (to be added to the resultant node).
+            </summary>
+            <param name="shouldExecuteFunc">Function to add as ShouldExecute to the flowcomponent.</param>
+            <returns>The current FlowComponentBuilder instance.</returns>
+        </member>
+        <member name="M:Banzai.Factories.FlowComponentBuilder`1.SetShouldExecuteAsync(System.Func{Banzai.IExecutionContext{`0},System.Threading.Tasks.Task{System.Boolean}})">
+            <summary>
+            Adds a ShouldExecuteAsync to the FlowComponent (to be added to the resultant node).
+            </summary>
+            <param name="shouldExecuteAsyncFunc">Function to add as ShouldExecute to the flowcomponent.</param>
+            <returns>The current FlowComponentBuilder instance.</returns>
+        </member>
+        <member name="M:Banzai.Factories.FlowComponentBuilder`1.ForChild``1(System.String,System.Int32)">
+            <summary>
+            Returns an instance of FlowComponentBuilder representing the requested child node.
+            </summary>
+            <typeparam name="TNode">Type of the node.</typeparam>
+            <param name="name">Optional name of the node in IOC registration.</param>
+            <param name="index">Index of the node if multiple matches are found in the parent.  Defaults to first.</param>
+            <returns>A child FlowComponentBuilder of this FlowComponentBuilder.</returns>
+        </member>
+        <member name="M:Banzai.Factories.FlowComponentBuilder`1.ForChild(System.Type,System.String,System.Int32)">
+            <summary>
+            Returns an instance of FlowComponentBuilder representing the requested child node.
+            </summary>
+            <param name="nodeType">Type of the node.</param>
+            <param name="name">Optional name of the node in IOC registration.</param>
+            <param name="index">Index of the node if multiple matches are found in the parent.  Defaults to first.</param>
+            <returns>A child FlowComponentBuilder of this FlowComponentBuilder.</returns>
+        </member>
+        <member name="M:Banzai.Factories.FlowComponentBuilder`1.ForChildFlow(System.String,System.Int32)">
+            <summary>
+            Returns an instance of FlowComponentBuilder representing the requested child flow.
+            </summary>
+            <param name="name">Optional name of the node in IOC registration.</param>
+            <param name="index">Index of the node if multiple matches are found in the parent.  Defaults to first.</param>
+            <returns>A child FlowComponentBuilder of this FlowComponentBuilder.</returns>
+        </member>
+        <member name="T:Banzai.Factories.IFlowRegistrar">
+            <summary>
+            Registers a flow with the flow register (typically a DI container).
+            </summary>
+        </member>
+        <member name="M:Banzai.Factories.IFlowRegistrar.RegisterFlow``1(Banzai.Factories.FlowComponent{``0})">
+            <summary>
+            Registers the flow.
+            </summary>
+            <typeparam name="T">Type of the flow subject.</typeparam>
+            <param name="flowRoot">Root of the flow to register.</param>
+        </member>
+        <member name="T:Banzai.Factories.NodeFactoryBase">
+            <summary>
+            Base class for untyped node factories
+            </summary>
+        </member>
+        <member name="M:Banzai.Factories.INodeFactory.GetNode``1">
+            <summary>
+            Gets a node by the specified type.
+            </summary>
+            <typeparam name="TNode">Type of the node to return.</typeparam>
+            <returns>The first node matching the TNode type.</returns>
+        </member>
+        <member name="M:Banzai.Factories.INodeFactory.GetNode``1(System.String)">
+            <summary>
+            Gets a node by the specified type and registered name.
+            </summary>
+            <param name="name">Name of the node to return (as registered).</param>
+            <typeparam name="TNode">Type of the node to return.</typeparam>
+            <returns>The first node matching the TNode type.</returns>
+        </member>
+        <member name="M:Banzai.Factories.INodeFactory.GetAllNodes``1">
+            <summary>
+            Gets all nodes matching the requested type.
+            </summary>
+            <typeparam name="TNode">Type of the nodes to return.</typeparam>
+            <returns>Enumerable of nodes matching the requested type.</returns>
+        </member>
+        <member name="M:Banzai.Factories.INodeFactory.GetFlow``1(System.String)">
+            <summary>
+            Gets a flow matching the specified name and subject type.
+            </summary>
+            <param name="name">Name of flow to return.</param>
+            <returns>Flow matching the requested criteria.</returns>
+        </member>
+        <member name="M:Banzai.Factories.NodeFactoryBase.GetNode``1">
+            <summary>
+            Gets a node by the specified type.
+            </summary>
+            <typeparam name="TNode">Type of the node to return.</typeparam>
+            <returns>The first node matching the TNode type.</returns>
+        </member>
+        <member name="M:Banzai.Factories.NodeFactoryBase.GetNode``1(System.String)">
+            <summary>
+            Gets a node by the specified type and registered name.
+            </summary>
+            <param name="name">Name of the node to return (as registered).</param>
+            <typeparam name="TNode">Type of the node to return.</typeparam>
+            <returns>The first node matching the TNode type.</returns>
+        </member>
+        <member name="M:Banzai.Factories.NodeFactoryBase.GetAllNodes``1">
+            <summary>
+            Gets all nodes matching the requested type.
+            </summary>
+            <typeparam name="TNode">Type of the nodes to return.</typeparam>
+            <returns>Enumerable of nodes matching the requested type.</returns>
+        </member>
+        <member name="M:Banzai.Factories.NodeFactoryBase.GetFlow``1(System.String)">
+            <summary>
+            Gets a flow matching the specified name and subject type.
+            </summary>
+            <param name="name">Name of flow to return.</param>
+            <returns>Flow matching the requested criteria.</returns>
+        </member>
+        <member name="M:Banzai.Factories.NodeFactoryBase.GetNode``1(System.Type)">
+            <summary>
+            Gets a node by the specified type.
+            </summary>
+            <param name="type">Type of the node to return.</param>
+            <returns>The first node matching the TNode type.</returns>
+        </member>
+        <member name="M:Banzai.Factories.NodeFactoryBase.GetNode``1(System.Type,System.String)">
+            <summary>
+            Gets a node by the specified type and registered name.
+            </summary>
+            <param name="name">Name of the node to return (as registered).</param>
+            <param name="type">Type of the node to return.</param>
+            <returns>The first node matching the TNode type.</returns>
+        </member>
+        <member name="M:Banzai.Factories.NodeFactoryBase.GetFlowRoot``1(System.String)">
+            <summary>
+            Method overridden to provide a root FlowComponent based on a name.
+            </summary>
+            <param name="name">Name of the flow root.</param>
+            <returns>FlowComponent corresponding to the named root.</returns>
+        </member>
+        <member name="M:Banzai.Factories.NodeFactoryBase.BuildNode``1(Banzai.Factories.FlowComponent{``0},System.Func{Banzai.IExecutionContext{``0},System.Threading.Tasks.Task{System.Boolean}},System.Func{Banzai.IExecutionContext{``0},System.Boolean})">
+            <summary>
+            Builds a node from the provided FlowComponent.
+            </summary>
+            <param name="component">Flowcomponent providing the node definition.</param>
+            <param name="shouldExecuteFunc">Allows a ShouldExecuteFunc to be specified from the parent.</param>
+            <param name="shouldExecuteFuncAsync">Allows a ShouldExecuteAsyncFunc to be specified from the parent.</param>
+            <returns>A constructed INode.</returns>
+        </member>
+        <member name="T:Banzai.Factories.NodeFactoryBase`1">
+            <summary>
+            Base class for node factories.
+            </summary>
+            <typeparam name="T">Type of the subject of the flow.</typeparam>
+        </member>
+        <member name="T:Banzai.Factories.INodeFactory`1">
+            <summary>
+            Interface for the node factory.  Used to create child nodes.
+            </summary>
+            <typeparam name="T">Type of the underlying node subject.</typeparam>
+        </member>
+        <member name="M:Banzai.Factories.INodeFactory`1.GetNode``1">
+            <summary>
+            Gets a node by the specified type.
+            </summary>
+            <typeparam name="TNode">Type of the node to return.</typeparam>
+            <returns>The first node matching the TNode type.</returns>
+        </member>
+        <member name="M:Banzai.Factories.INodeFactory`1.GetNode``1(System.String)">
+            <summary>
+            Gets a node by the specified type and registered name.
+            </summary>
+            <param name="name">Name of the node to return (as registered).</param>
+            <typeparam name="TNode">Type of the node to return.</typeparam>
+            <returns>The first node matching the TNode type.</returns>
+        </member>
+        <member name="M:Banzai.Factories.INodeFactory`1.GetNode(System.Type)">
+            <summary>
+            Gets a node by the specified type.
+            </summary>
+            <param name="type">Type of the node to return.</param>
+            <returns>The first node matching the TNode type.</returns>
+        </member>
+        <member name="M:Banzai.Factories.INodeFactory`1.GetNode(System.Type,System.String)">
+            <summary>
+            Gets a node by the specified type and registered name.
+            </summary>
+            <param name="name">Name of the node to return (as registered).</param>
+            <param name="type">Type of the node to return.</param>
+            <returns>The first node matching the TNode type.</returns>
+        </member>
+        <member name="M:Banzai.Factories.INodeFactory`1.GetNodes(System.Collections.Generic.IEnumerable{System.Type})">
+            <summary>
+            Gets the default registered node for the specified types.
+            </summary>
+            <param name="types">Types of the nodes to return.</param>
+            <returns>The first node matching each TNode type.</returns>
+        </member>
+        <member name="M:Banzai.Factories.INodeFactory`1.GetAllNodes``1">
+            <summary>
+            Gets all nodes matching the requested type.
+            </summary>
+            <typeparam name="TNode">Type of the nodes to return.</typeparam>
+            <returns>Enumerable of nodes matching the requested type.</returns>
+        </member>
+        <member name="M:Banzai.Factories.INodeFactory`1.GetFlow(System.String)">
+            <summary>
+            Gets a flow matching the specified name and subject type.
+            </summary>
+            <param name="name">Name of flow to return.</param>
+            <returns>Flow matching the requested criteria.</returns>
+        </member>
+        <member name="M:Banzai.Factories.NodeFactoryBase`1.GetNode``1">
+            <summary>
+            Gets a node by the specified type.
+            </summary>
+            <typeparam name="TNode">Type of the node to return.</typeparam>
+            <returns>The first node matching the TNode type.</returns>
+        </member>
+        <member name="M:Banzai.Factories.NodeFactoryBase`1.GetNode``1(System.String)">
+            <summary>
+            Gets a node by the specified type and registered name.
+            </summary>
+            <param name="name">Name of the node to return (as registered).</param>
+            <typeparam name="TNode">Type of the node to return.</typeparam>
+            <returns>The first node matching the TNode type.</returns>
+        </member>
+        <member name="M:Banzai.Factories.NodeFactoryBase`1.GetNode(System.Type)">
+            <summary>
+            Gets a node by the specified type.
+            </summary>
+            <param name="type">Type of the node to return.</param>
+            <returns>The first node matching the TNode type.</returns>
+        </member>
+        <member name="M:Banzai.Factories.NodeFactoryBase`1.GetNode(System.Type,System.String)">
+            <summary>
+            Gets a node by the specified type and registered name.
+            </summary>
+            <param name="name">Name of the node to return (as registered).</param>
+            <param name="type">Type of the node to return.</param>
+            <returns>The first node matching the TNode type.</returns>
+        </member>
+        <member name="M:Banzai.Factories.NodeFactoryBase`1.GetNodes(System.Collections.Generic.IEnumerable{System.Type})">
+            <summary>
+            Gets the default registered node for the specified types.
+            </summary>
+            <param name="types">Types of the nodes to return.</param>
+            <returns>The first node matching each TNode type.</returns>
+        </member>
+        <member name="M:Banzai.Factories.NodeFactoryBase`1.GetAllNodes``1">
+            <summary>
+            Gets all nodes matching the requested type.
+            </summary>
+            <typeparam name="TNode">Type of the nodes to return.</typeparam>
+            <returns>Enumerable of nodes matching the requested type.</returns>
+        </member>
+        <member name="M:Banzai.Factories.NodeFactoryBase`1.GetFlow(System.String)">
+            <summary>
+            Gets a flow matching the specified name and subject type.
+            </summary>
+            <param name="name">Name of flow to return.</param>
+            <returns>Flow matching the requested criteria.</returns>
+        </member>
+        <member name="M:Banzai.Factories.NodeFactoryBase`1.GetFlowRoot(System.String)">
+            <summary>
+            Method overridden to provide a root FlowComponent based on a name.
+            </summary>
+            <param name="name">Name of the flow root.</param>
+            <returns>FlowComponent corresponding to the named root.</returns>
+        </member>
+        <member name="M:Banzai.Factories.NodeFactoryBase`1.BuildNode(Banzai.Factories.FlowComponent{`0},System.Func{Banzai.IExecutionContext{`0},System.Threading.Tasks.Task{System.Boolean}},System.Func{Banzai.IExecutionContext{`0},System.Boolean})">
+            <summary>
+            Builds a node from the provided FlowComponent.
+            </summary>
+            <param name="component">Flowcomponent providing the node definition.</param>
+            <param name="shouldExecuteFunc">Allows a ShouldExecuteFunc to be specified from the parent.</param>
+            <param name="shouldExecuteFuncAsync">Allows a ShouldExecuteAsyncFunc to be specified from the parent.</param>
+            <returns>A constructed INode.</returns>
+        </member>
+        <member name="T:Banzai.IFirstMatchNode`1">
+            <summary>
+            Defines a node in which the first matching ShouldExecute() node is executed.
+            </summary>
+            <typeparam name="T">Type on which the node operates.</typeparam>
+        </member>
+        <member name="T:Banzai.IFirstMatchNodeBase`1">
+            <summary>
+            Defines a node in which the first matching ShouldExecute() node is executed.
+            </summary>
+            <typeparam name="T">Type on which the node operates.</typeparam>
+        </member>
+        <member name="T:Banzai.IMultiNode`1">
+            <summary>
+            Basis for other multinodes (Pipleline/GroupNode/FirstMatch)
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="T:Banzai.INode`1">
+            <summary>
+            The basic interface for a node to be run by the pipeline.
+            </summary>
+            <typeparam name="T">Type that the pipeline acts upon.</typeparam>
+        </member>
+        <member name="M:Banzai.INode`1.ShouldExecute(Banzai.IExecutionContext{`0})">
+            <summary>
+            Determines if the node should be executed.
+            </summary>
+            <param name="context">The current execution context.</param>
+            <returns>Bool indicating if the current node should be run.</returns>
+        </member>
+        <member name="M:Banzai.INode`1.ShouldExecuteAsync(Banzai.IExecutionContext{`0})">
+            <summary>
+            Determines if the node should be executed.
+            </summary>
+            <param name="context">The current execution context.</param>
+            <returns>Bool indicating if the current node should be run.</returns>
+        </member>
+        <member name="M:Banzai.INode`1.ExecuteAsync(`0)">
+            <summary>
+            Used to kick off execution of a node with a default execution context.
+            </summary>
+            <param name="subject">Subject to be moved through the node.</param>
+            <returns>A NodeResult</returns>
+        </member>
+        <member name="M:Banzai.INode`1.ExecuteAsync(Banzai.IExecutionContext{`0})">
+            <summary>
+            Used to kick off execution of a node with a default execution context.
+            </summary>
+            <param name="sourceContext">Subject to be moved through the node.</param>
+            <returns>A NodeResult</returns>
+        </member>
+        <member name="M:Banzai.INode`1.ExecuteManyAsync(System.Collections.Generic.IEnumerable{`0},Banzai.ExecutionOptions)">
+            <summary>
+            Used to kick off execution of a node with a default execution context for all subjects using Async WhenAll semantics internally .
+            </summary>
+            <param name="subjects">Subject to be moved through the node.</param>
+            <param name="options">Execution options to apply to running this enumerable of subjects.</param>
+            <returns>An aggregated NodeResult.</returns>
+        </member>
+        <member name="M:Banzai.INode`1.ExecuteManySeriallyAsync(System.Collections.Generic.IEnumerable{`0},Banzai.ExecutionOptions)">
+            <summary>
+            Used to kick off execution of a node with a default execution context for all subjects in a serial manner.
+            </summary>
+            <param name="subjects">Subject to be moved through the node.</param>
+            <param name="options">Execution options to apply to running this enumerable of subjects.</param>
+            <returns>An aggregated NodeResult.</returns>
+        </member>
+        <member name="M:Banzai.INode`1.Reset">
+            <summary>
+            Used to reset the node to a prerun state
+            </summary>
+        </member>
+        <member name="P:Banzai.INode`1.LocalOptions">
+            <summary>
+            Gets the local options associated with this node.  These options will apply only to the current node.
+            </summary>
+        </member>
+        <member name="P:Banzai.INode`1.Status">
+            <summary>
+            Gets the current runstatus of this node.
+            </summary>
+        </member>
+        <member name="P:Banzai.INode`1.LogWriter">
+            <summary>
+            Gets the current log writer
+            </summary>
+        </member>
+        <member name="P:Banzai.INode`1.ShouldExecuteFunc">
+            <summary>
+            Gets or sets the function to define if this node should be executed.
+            </summary>
+        </member>
+        <member name="P:Banzai.INode`1.ShouldExecuteFuncAsync">
+            <summary>
+            Gets or sets the async function to call to determine if this node should be executed.
+            </summary>
+        </member>
+        <member name="M:Banzai.IMultiNode`1.AddChild(Banzai.INode{`0})">
+            <summary>
+            Adds a child node to this node.
+            </summary>
+            <param name="child">Child node to add.</param>
+        </member>
+        <member name="M:Banzai.IMultiNode`1.AddChildren(System.Collections.Generic.IEnumerable{Banzai.INode{`0}})">
+            <summary>
+            Adds multiple child nodes to this node.
+            </summary>
+            <param name="children">Children to add.</param>
+        </member>
+        <member name="M:Banzai.IMultiNode`1.RemoveChild(Banzai.INode{`0})">
+            <summary>
+            Removes a child node from this node.
+            </summary>
+            <param name="child">Child node to remove.</param>
+        </member>
+        <member name="P:Banzai.IMultiNode`1.NodeFactory">
+            <summary>
+            Gets or sets an injected NodeFactory to use when constructing this node.
+            </summary>
+        </member>
+        <member name="P:Banzai.IMultiNode`1.Children">
+            <summary>
+            Gets the children of this node.
+            </summary>
+        </member>
+        <member name="T:Banzai.FirstMatchNode`1">
+            <summary>
+            Defines a node in which the first matching ShouldExecute() node is executed.
+            </summary>
+            <typeparam name="T">Type on which the node operates.</typeparam>
+        </member>
+        <member name="T:Banzai.FirstMatchNodeBase`1">
+            <summary>
+            Defines a base node in which the first matching ShouldExecute() node is executed.
+            Inherit from this class for custom FirstMatchNodes.
+            </summary>
+            <typeparam name="T">Type on which the node operates.</typeparam>
+        </member>
+        <member name="T:Banzai.MultiNode`1">
+            <summary>
+            Base class to use for other MultiNodes(Pipeline/Group/FirstMatch)
+            </summary>
+            <typeparam name="T">Type of the subject that the node operates on.</typeparam>
+        </member>
+        <member name="T:Banzai.Node`1">
+            <summary>
+            The basic class for a functional node to be run by the pipeline.
+            </summary>
+            <typeparam name="T">Type that the pipeline acts upon.</typeparam>
+        </member>
+        <member name="M:Banzai.Node`1.#ctor">
+            <summary>
+            Creates a new Node.
+            </summary>
+        </member>
+        <member name="M:Banzai.Node`1.#ctor(Banzai.ExecutionOptions)">
+            <summary>
+            Creates a new Node with local options to override global options.
+            </summary>
+            <param name="localOptions">Local options to override global options.</param>
+        </member>
+        <member name="M:Banzai.Node`1.Reset">
+            <summary>
+            Resets the current node to unrun state.
+            </summary>
+        </member>
+        <member name="M:Banzai.Node`1.ShouldExecute(Banzai.IExecutionContext{`0})">
+            <summary>
+            Determines if the current node should execute with synchronous wrapper.
+            </summary>
+            <param name="context">Current ExecutionContext</param>
+            <returns>Bool indicating if this node should run.</returns>
+        </member>
+        <member name="M:Banzai.Node`1.ShouldExecuteAsync(Banzai.IExecutionContext{`0})">
+            <summary>
+            Determines if the current node should execute.
+            </summary>
+            <param name="context">Current ExecutionContext</param>
+            <returns>Bool indicating if this node should run.</returns>
+        </member>
+        <member name="M:Banzai.Node`1.ExecuteAsync(`0)">
+            <summary>
+            Used to kick off execution of a node with a default execution context.
+            </summary>
+            <param name="subject">Subject to be moved through the node.</param>
+            <returns>A NodeResult</returns>
+        </member>
+        <member name="M:Banzai.Node`1.ExecuteManySeriallyAsync(System.Collections.Generic.IEnumerable{`0},Banzai.ExecutionOptions)">
+            <summary>
+            Used to kick off execution of a node with a default execution context for all subjects in a serial manner.
+            </summary>
+            <param name="subjects">Subject to be moved through the node.</param>
+            <param name="options">Execution options to apply to running this enumerable of subjects.</param>
+            <returns>An aggregated NodeResult.</returns>
+        </member>
+        <member name="M:Banzai.Node`1.ExecuteManyAsync(System.Collections.Generic.IEnumerable{`0},Banzai.ExecutionOptions)">
+            <summary>
+            Used to kick off execution of a node with a default execution context for all subjects using Async WhenAll semantics internally .
+            </summary>
+            <param name="subjects">Subject to be moved through the node.</param>
+            <param name="options">Execution options to apply to running this enumerable of subjects.</param>
+            <returns>An aggregated NodeResult.</returns>
+        </member>
+        <member name="M:Banzai.Node`1.ExecuteAsync(Banzai.IExecutionContext{`0})">
+            <summary>
+            Used to kick off execution of a node with a specified execution context.
+            </summary>
+            <param name="sourceContext">ExecutionContext that includes a subject to be moved through the node.</param>
+            <returns>A NodeResult</returns>
+        </member>
+        <member name="M:Banzai.Node`1.GetEffectiveOptions(Banzai.ExecutionOptions)">
+            <summary>
+            Gets the current effective options of this node based on the passed execution options and its own local options.
+            </summary>
+            <param name="globalOptions">Current global options (typically from the current ExecutionContext)</param>
+            <returns>Effective options applied to this node when it executes.</returns>
+        </member>
+        <member name="M:Banzai.Node`1.PerformExecute(Banzai.IExecutionContext{`0})">
+            <summary>
+            Method to override to provide functionality to the current node with synchronous wrapper.
+            </summary>
+            <param name="context">Current execution context.</param>
+            <returns>Final result execution status of the node.</returns>
+        </member>
+        <member name="M:Banzai.Node`1.PerformExecuteAsync(Banzai.IExecutionContext{`0})">
+            <summary>
+            Method to override to provide functionality to the current node.
+            </summary>
+            <param name="context">Current execution context.</param>
+            <returns>Final result execution status of the node.</returns>
+        </member>
+        <member name="M:Banzai.Node`1.PrepareExecutionContext(Banzai.IExecutionContext{`0},Banzai.NodeResult)">
+            <summary>
+            Prepares the execution context before the current node is run.
+            </summary>
+            <param name="context">Source context for preparation.</param>
+            <param name="currentResult">A referene to the result of the current node.</param>
+            <returns>The execution context to be used in node execution.</returns>
+        </member>
+        <member name="M:Banzai.Node`1.OnBeforeExecute(Banzai.IExecutionContext{`0})">
+            <summary>
+            Called before the node is executed. Override to add functionality.
+            </summary>
+            <param name="context">Effective context for execution.</param>
+        </member>
+        <member name="M:Banzai.Node`1.OnAfterExecute(Banzai.IExecutionContext{`0})">
+            <summary>
+            Called after the node is executed. Override to add functionality.
+            </summary>
+            <param name="context">Effective context for execution.</param>
+        </member>
+        <member name="P:Banzai.Node`1.LocalOptions">
+            <summary>
+            Local options which override the global options when this Node is run.  Applies only to the current node.
+            </summary>
+        </member>
+        <member name="P:Banzai.Node`1.Status">
+            <summary>
+            Current run status of this node.
+            </summary>
+        </member>
+        <member name="P:Banzai.Node`1.LogWriter">
+            <summary>
+            LogWriter used to write to the log from this node.
+            </summary>
+        </member>
+        <member name="P:Banzai.Node`1.ShouldExecuteFunc">
+            <summary>
+            Gets or sets the function to define if this node should be executed.
+            </summary>
+        </member>
+        <member name="P:Banzai.Node`1.ShouldExecuteFuncAsync">
+            <summary>
+            Gets or sets the async function to call to determine if this node should be executed.
+            </summary>
+        </member>
+        <member name="M:Banzai.MultiNode`1.AddChild(Banzai.INode{`0})">
+            <summary>
+            Adds a child node to this node.
+            </summary>
+            <param name="child">Child node to add.</param>
+        </member>
+        <member name="M:Banzai.MultiNode`1.AddChildren(System.Collections.Generic.IEnumerable{Banzai.INode{`0}})">
+            <summary>
+            Adds multiple child nodes to this node.
+            </summary>
+            <param name="children">Children to add.</param>
+        </member>
+        <member name="M:Banzai.MultiNode`1.RemoveChild(Banzai.INode{`0})">
+            <summary>
+            Removes a child node from this node.
+            </summary>
+            <param name="child">Child node to remove.</param>
+        </member>
+        <member name="M:Banzai.MultiNode`1.Reset">
+            <summary>
+            Resets this node and all its children to an unrun state.
+            </summary>
+        </member>
+        <member name="M:Banzai.MultiNode`1.PerformExecuteAsync(Banzai.IExecutionContext{`0})">
+            <summary>
+            Executes child nodes of the current node.
+            </summary>
+            <param name="context">Current ExecutionContext.</param>
+            <returns>NodeResultStatus representing the current node result.</returns>
+        </member>
+        <member name="M:Banzai.MultiNode`1.PrepareExecutionContext(Banzai.IExecutionContext{`0},Banzai.NodeResult)">
+            <summary>
+            Prepares the execution context before the current node is run.
+            </summary>
+            <param name="context">Source context for preparation.</param>
+            <param name="currentResult">A referene to the result of the current node.</param>
+            <returns>The execution context to be used in node execution.</returns>
+        </member>
+        <member name="M:Banzai.MultiNode`1.ExecuteChildrenAsync(Banzai.IExecutionContext{`0})">
+            <summary>
+            Executes child nodes of the current node.
+            </summary>
+            <param name="context">Current ExecutionContext.</param>
+            <returns>NodeResultStatus representing the current node result.</returns>
+        </member>
+        <member name="P:Banzai.MultiNode`1.NodeFactory">
+            <summary>
+            Gets or sets an injected NodeFactory to use when constructing this node.
+            </summary>
+        </member>
+        <member name="P:Banzai.MultiNode`1.Children">
+            <summary>
+            Gets the children of this node.
+            </summary>
+        </member>
+        <member name="M:Banzai.FirstMatchNodeBase`1.ExecuteChildrenAsync(Banzai.IExecutionContext{`0})">
+            <summary>
+            Executes child nodes of the current node.
+            </summary>
+            <param name="context">Current ExecutionContext.</param>
+            <returns>NodeResultStatus representing the current node result.</returns>
+        </member>
+        <member name="T:Banzai.IFuncNode`1">
+            <summary>
+            A node that exposes functions to set to perform node execution.
+            </summary>
+            <typeparam name="T">Type of the subject that the node operates on.</typeparam>
+        </member>
+        <member name="P:Banzai.IFuncNode`1.ExecutedFunc">
+            <summary>
+            Function to be performed when the node is executed.
+            </summary>
+        </member>
+        <member name="P:Banzai.IFuncNode`1.ExecutedFuncAsync">
+            <summary>
+            Method that defines the async function to execute on the subject for this node.
+            </summary>
+        </member>
+        <member name="T:Banzai.FuncNode`1">
+            <summary>
+            A node that exposes functions to set to perform node execution.
+            </summary>
+            <typeparam name="T">Type of the subject that the node operates on.</typeparam>
+        </member>
+        <member name="M:Banzai.FuncNode`1.PerformExecuteAsync(Banzai.IExecutionContext{`0})">
+            <summary>
+            Sealed method used to call the provided ExecutedFunc.
+            </summary>
+            <param name="context">Current execution context.</param>
+            <returns>Final result execution status of the node.</returns>
+        </member>
+        <member name="M:Banzai.FuncNode`1.PerformExecute(Banzai.IExecutionContext{`0})">
+            <summary>
+            Sealed method used to call the provided ExecutedFunc.
+            </summary>
+            <param name="context">Current execution context.</param>
+            <returns>Final result execution status of the node.</returns>
+        </member>
+        <member name="P:Banzai.FuncNode`1.ExecutedFunc">
+            <summary>
+            Synchronous function that provides functionality for the node.  Takes precedence above overridden PerformExecute method.
+            </summary>
+        </member>
+        <member name="P:Banzai.FuncNode`1.ExecutedFuncAsync">
+            <summary>
+            Function executed when the node executes. Takes precedence over overridden PerformExecute method.
+            </summary>
+        </member>
+        <member name="T:Banzai.IGroupNode`1">
+            <summary>
+            This node runs all children potentially simultaneously using Async's WhenAll.
+            This is a good choice for multiple i/o operations.  The node will not complete until all children complete.
+            </summary>
+        </member>
+        <member name="T:Banzai.IGroupNodeBase`1">
+            <summary>
+            This node runs all children potentially simultaneously using Async's WhenAll.
+            This is a good choice for multiple i/o operations.  The node will not complete until all children complete.
+            </summary>
+        </member>
+        <member name="T:Banzai.GroupNode`1">
+            <summary>
+            This node runs all children potentially simultaneously using Async's WhenAll.
+            This is a good choice for multiple i/o operations.  The node will not complete until all children complete.
+            </summary>
+        </member>
+        <member name="T:Banzai.GroupNodeBase`1">
+            <summary>
+            Class from which to derive custom group nodes.
+            This node runs all children potentially simultaneously using Async's WhenAll.
+            This is a good choice for multiple i/o operations.  The node will not complete until all children complete.
+            </summary>
+        </member>
+        <member name="M:Banzai.GroupNodeBase`1.ExecuteChildrenAsync(Banzai.IExecutionContext{`0})">
+            <summary>
+            Executes child nodes of the current node.
+            </summary>
+            <param name="context">Current ExecutionContext.</param>
+            <returns>NodeResultStatus representing the current node result.</returns>
+        </member>
+        <member name="T:Banzai.Logging.DebugLogWriter">
+            <summary>
+            Default logger that writes to the debug output.
+            </summary>
+        </member>
+        <member name="T:Banzai.Logging.ILogWriter">
+            <summary>
+            Interface for the LogWriter exposed in an INode.
+            </summary>
+        </member>
+        <member name="M:Banzai.Logging.ILogWriter.Fatal(System.String,System.Exception)">
+            <summary>
+            Log a fatal error.
+            </summary>
+            <param name="message">Message to log.</param>
+            <param name="exception">Exception associated with the error.</param>
+        </member>
+        <member name="M:Banzai.Logging.ILogWriter.Fatal(System.String,System.Object[])">
+            <summary>
+            Log a fatal exception.  
+            </summary>
+            <param name="format">Format of the message.  Defers format until logging level is assessed.</param>
+            <param name="formatArgs">Args to be formatted into the message format.</param>
+        </member>
+        <member name="M:Banzai.Logging.ILogWriter.Fatal(System.Func{System.String},System.Exception)">
+            <summary>
+            Log a fatal exception.
+            </summary>
+            <param name="deferredWrite">Defers the write operation until logging level is assessed. 
+            Can be useful when expensive concatenation operations are required.</param>
+            <param name="exception">Exception associated with the error.</param>
+        </member>
+        <member name="M:Banzai.Logging.ILogWriter.Error(System.String,System.Exception)">
+            <summary>
+            Log an error.
+            </summary>
+            <param name="message">Message to log.</param>
+            <param name="exception">Exception associated with the error.</param>
+        </member>
+        <member name="M:Banzai.Logging.ILogWriter.Error(System.String,System.Object[])">
+            <summary>
+            Log an error.  
+            </summary>
+            <param name="format">Format of the message.  Defers format until logging level is assessed.</param>
+            <param name="formatArgs">Args to be formatted into the message format.</param>
+        </member>
+        <member name="M:Banzai.Logging.ILogWriter.Error(System.Func{System.String},System.Exception)">
+            <summary>
+            Log an error.
+            </summary>
+            <param name="deferredWrite">Defers the write operation until logging level is assessed. 
+            Can be useful when expensive concatenation operations are required.</param>
+            <param name="exception">Exception associated with the error.</param>
+        </member>
+        <member name="M:Banzai.Logging.ILogWriter.Warn(System.String,System.Exception)">
+            <summary>
+            Log a warning.
+            </summary>
+            <param name="message">Message to log.</param>
+            <param name="exception">Exception associated with the error.</param>
+        </member>
+        <member name="M:Banzai.Logging.ILogWriter.Warn(System.String,System.Object[])">
+            <summary>
+            Log a warning. 
+            </summary>
+            <param name="format">Format of the message.  Defers format until logging level is assessed.</param>
+            <param name="formatArgs">Args to be formatted into the message format.</param>
+        </member>
+        <member name="M:Banzai.Logging.ILogWriter.Warn(System.Func{System.String},System.Exception)">
+            <summary>
+            Log a warning.
+            </summary>
+            <param name="deferredWrite">Defers the write operation until logging level is assessed. 
+            Can be useful when expensive concatenation operations are required.</param>
+            <param name="exception">Exception associated with the error.</param>
+        </member>
+        <member name="M:Banzai.Logging.ILogWriter.Info(System.String,System.Exception)">
+            <summary>
+            Log an informational message.
+            </summary>
+            <param name="message">Message to log.</param>
+            <param name="exception">Exception associated with the error.</param>
+        </member>
+        <member name="M:Banzai.Logging.ILogWriter.Info(System.String,System.Object[])">
+            <summary>
+            Log an info message.
+            </summary>
+            <param name="format">Format of the message.  Defers format until logging level is assessed.</param>
+            <param name="formatArgs">Args to be formatted into the message format.</param>
+        </member>
+        <member name="M:Banzai.Logging.ILogWriter.Info(System.Func{System.String},System.Exception)">
+            <summary>
+            Log an info message.
+            </summary>
+            <param name="deferredWrite">Defers the write operation until logging level is assessed. 
+            Can be useful when expensive concatenation operations are required.</param>
+            <param name="exception">Exception associated with the error.</param>
+        </member>
+        <member name="M:Banzai.Logging.ILogWriter.Debug(System.String,System.Exception)">
+            <summary>
+            Log a debug message.
+            </summary>
+            <param name="message">Message to log.</param>
+            <param name="exception">Exception associated with the error.</param>
+        </member>
+        <member name="M:Banzai.Logging.ILogWriter.Debug(System.String,System.Object[])">
+            <summary>
+            Log a debug message.  
+            </summary>
+            <param name="format">Format of the message.  Defers format until logging level is assessed.</param>
+            <param name="formatArgs">Args to be formatted into the message format.</param>
+        </member>
+        <member name="M:Banzai.Logging.ILogWriter.Debug(System.Func{System.String},System.Exception)">
+            <summary>
+            Log a debug message.
+            </summary>
+            <param name="deferredWrite">Defers the write operation until logging level is assessed. 
+            Can be useful when expensive concatenation operations are required.</param>
+            <param name="exception">Exception associated with the error.</param>
+        </member>
+        <member name="M:Banzai.Logging.DebugLogWriter.#ctor(System.Type)">
+            <summary>
+            Constructs a new DebugLogWriter.
+            </summary>
+            <param name="type">Type for which logger is created.</param>
+        </member>
+        <member name="M:Banzai.Logging.DebugLogWriter.Fatal(System.String,System.Exception)">
+            <summary>
+            Log a fatal error.
+            </summary>
+            <param name="message">Message to log.</param>
+            <param name="exception">Exception associated with the error.</param>
+        </member>
+        <member name="M:Banzai.Logging.DebugLogWriter.Fatal(System.String,System.Object[])">
+            <summary>
+            Log a fatal exception.  
+            </summary>
+            <param name="format">Format of the message.  Defers format until logging level is assessed.</param>
+            <param name="formatArgs">Args to be messageformatted into the message format.</param>
+        </member>
+        <member name="M:Banzai.Logging.DebugLogWriter.Fatal(System.Func{System.String},System.Exception)">
+            <summary>
+            Log a fatal exception.
+            </summary>
+            <param name="deferredWrite">Defers the write operation until logging level is assessed. 
+            Can be useful when expensive concatenation operations are required.</param>
+            <param name="exception">Exception associated with the error.</param>
+        </member>
+        <member name="M:Banzai.Logging.DebugLogWriter.Error(System.String,System.Exception)">
+            <summary>
+            Log an error.
+            </summary>
+            <param name="message">Message to log.</param>
+            <param name="exception">Exception associated with the error.</param>
+        </member>
+        <member name="M:Banzai.Logging.DebugLogWriter.Error(System.String,System.Object[])">
+            <summary>
+            Log an error.  
+            </summary>
+            <param name="format">Format of the message.  Defers format until logging level is assessed.</param>
+            <param name="formatArgs">Args to be messageformatted into the message format.</param>
+        </member>
+        <member name="M:Banzai.Logging.DebugLogWriter.Error(System.Func{System.String},System.Exception)">
+            <summary>
+            Log an error.
+            </summary>
+            <param name="deferredWrite">Defers the write operation until logging level is assessed. 
+            Can be useful when expensive concatenation operations are required.</param>
+            <param name="exception">Exception associated with the error.</param>
+        </member>
+        <member name="M:Banzai.Logging.DebugLogWriter.Warn(System.String,System.Exception)">
+            <summary>
+            Log a warning.
+            </summary>
+            <param name="message">Message to log.</param>
+            <param name="exception">Exception associated with the error.</param>
+        </member>
+        <member name="M:Banzai.Logging.DebugLogWriter.Warn(System.String,System.Object[])">
+            <summary>
+            Log a warning. 
+            </summary>
+            <param name="format">Format of the message.  Defers format until logging level is assessed.</param>
+            <param name="formatArgs">Args to be formatted into the message format.</param>
+        </member>
+        <member name="M:Banzai.Logging.DebugLogWriter.Warn(System.Func{System.String},System.Exception)">
+            <summary>
+            Log a warning.
+            </summary>
+            <param name="deferredWrite">Defers the write operation until logging level is assessed. 
+            Can be useful when expensive concatenation operations are required.</param>
+            <param name="exception">Exception associated with the error.</param>
+        </member>
+        <member name="M:Banzai.Logging.DebugLogWriter.Info(System.String,System.Exception)">
+            <summary>
+            Log an informational message.
+            </summary>
+            <param name="message">Message to log.</param>
+            <param name="exception">Exception associated with the error.</param>
+        </member>
+        <member name="M:Banzai.Logging.DebugLogWriter.Info(System.String,System.Object[])">
+            <summary>
+            Log an info message.
+            </summary>
+            <param name="format">Format of the message.  Defers format until logging level is assessed.</param>
+            <param name="formatArgs">Args to be formatted into the message format.</param>
+        </member>
+        <member name="M:Banzai.Logging.DebugLogWriter.Info(System.Func{System.String},System.Exception)">
+            <summary>
+            Log an info message.
+            </summary>
+            <param name="deferredWrite">Defers the write operation until logging level is assessed. 
+            Can be useful when expensive concatenation operations are required.</param>
+            <param name="exception">Exception associated with the error.</param>
+        </member>
+        <member name="M:Banzai.Logging.DebugLogWriter.Debug(System.String,System.Exception)">
+            <summary>
+            Log a debug message.
+            </summary>
+            <param name="message">Message to log.</param>
+            <param name="exception">Exception associated with the error.</param>
+        </member>
+        <member name="M:Banzai.Logging.DebugLogWriter.Debug(System.String,System.Object[])">
+            <summary>
+            Log a debug message.  
+            </summary>
+            <param name="format">Format of the message.  Defers format until logging level is assessed.</param>
+            <param name="formatArgs">Args to be formatted into the message format.</param>
+        </member>
+        <member name="M:Banzai.Logging.DebugLogWriter.Debug(System.Func{System.String},System.Exception)">
+            <summary>
+            Log a debug message.
+            </summary>
+            <param name="deferredWrite">Defers the write operation until logging level is assessed. 
+            Can be useful when expensive concatenation operations are required.</param>
+            <param name="exception">Exception associated with the error.</param>
+        </member>
+        <member name="T:Banzai.Logging.DebugLogWriterFactory">
+            <summary>
+            Factory for providing a DebugLogWriter.
+            </summary>
+        </member>
+        <member name="T:Banzai.Logging.ILogWriterFactory">
+            <summary>
+            Interface for providing a log writer.
+            </summary>
+        </member>
+        <member name="M:Banzai.Logging.ILogWriterFactory.GetLogger(System.Type)">
+            <summary>
+            Gets a log writer based on the passed type.
+            </summary>
+            <param name="type">Type for which to get a log writer.</param>
+            <returns>An ILogWriter</returns>
+        </member>
+        <member name="M:Banzai.Logging.DebugLogWriterFactory.GetLogger(System.Type)">
+            <summary>
+            Gets a log writer based on the passed type.
+            </summary>
+            <param name="type">Type for which to get a log writer.</param>
+            <returns>An ILogWriter</returns>
+        </member>
+        <member name="T:Banzai.Logging.LogWriter">
+            <summary>
+            Factory implementation for retrieving a log writer.
+            </summary>
+        </member>
+        <member name="M:Banzai.Logging.LogWriter.SetFactory(Banzai.Logging.ILogWriterFactory)">
+            <summary>
+            Sets the internal factory to the desired ILogWriterFactory
+            </summary>
+            <param name="factory">Factory to use for getting log writers.</param>
+        </member>
+        <member name="M:Banzai.Logging.LogWriter.GetLogger``1(``0)">
+            <summary>
+            Method for getting a log writer from the current factory.
+            </summary>
+            <typeparam name="T">Type for which to get a logger.</typeparam>
+            <param name="instance">Instance from whose type the logger is created.</param>
+            <returns>An ILogWriter.</returns>
+        </member>
+        <member name="T:Banzai.IPipelineNode`1">
+            <summary>
+            This node runs children serially as defined by their current order (as added).
+            This node is used for constructing pipelines. The node will not complete until all children complete or an error is encountered.
+            </summary>
+        </member>
+        <member name="T:Banzai.IPipelineNodeBase`1">
+            <summary>
+            This node runs children serially as defined by their current order (as added).
+            This node is used for constructing pipelines. The node will not complete until all children complete or an error is encountered.
+            </summary>
+        </member>
+        <member name="T:Banzai.PipelineNode`1">
+            <summary>
+            This node runs children serially as defined by their current order (as added).
+            This node is used for constructing pipelines. The node will not complete until all children complete or an error is encountered.
+            </summary>
+        </member>
+        <member name="T:Banzai.PipelineNodeBase`1">
+            <summary>
+            Class from which to derive custom pipeline nodes.
+            This node runs children serially as defined by their current order (as added).
+            This node is used for constructing pipelines. The node will not complete until all children complete or an error is encountered.
+            </summary>
+        </member>
+        <member name="M:Banzai.PipelineNodeBase`1.ExecuteChildrenAsync(Banzai.IExecutionContext{`0})">
+            <summary>
+            Executes child nodes of the current node.
+            </summary>
+            <param name="context">Current ExecutionContext.</param>
+            <returns>NodeResultStatus representing the current node result.</returns>
+        </member>
+        <member name="T:Banzai.ResultExtensions">
+            <summary>
+            Extension methods for Node results.
+            </summary>
+        </member>
+        <member name="M:Banzai.ResultExtensions.AggregateNodeResults(System.Collections.Generic.IEnumerable{Banzai.NodeResult},Banzai.ExecutionOptions)">
+            <summary>
+            Aggregates the child results of a MultiNode into a summary result status.
+            </summary>
+            <param name="results">Results to aggregate.</param>
+            <param name="options">Execution options to consider during aggregation.</param>
+            <returns>Summary NodeResultStatus.</returns>
+        </member>
+        <member name="T:Banzai.ITransitionFuncNode`2">
+            <summary>
+            Interface for a Node that allows a transition to another node type and specifies the transitions via functions.
+            </summary>
+            <typeparam name="TSource">Source node type.</typeparam>
+            <typeparam name="TDestination">Destination node type.</typeparam>
+        </member>
+        <member name="T:Banzai.ITransitionNode`2">
+            <summary>
+            Interface for a Node that allows a transition to another node type.
+            </summary>
+            <typeparam name="TSource">Source node type.</typeparam>
+            <typeparam name="TDestination">Destination node type.</typeparam>
+        </member>
+        <member name="P:Banzai.ITransitionNode`2.ChildNode">
+            <summary>
+            Gets or sets the destionation child node to execute.
+            </summary>
+        </member>
+        <member name="P:Banzai.ITransitionNode`2.NodeFactory">
+            <summary>
+            Gets or sets an injected NodeFactory to use when constructing this node.
+            </summary>
+        </member>
+        <member name="P:Banzai.ITransitionFuncNode`2.TransitionSourceFuncAsync">
+            <summary>
+            Asynchronous function to transition the source to the destination.
+            </summary>
+        </member>
+        <member name="P:Banzai.ITransitionFuncNode`2.TransitionSourceFunc">
+            <summary>
+            Synchronous function to transition the source to the destination.
+            </summary>
+        </member>
+        <member name="P:Banzai.ITransitionFuncNode`2.TransitionResultFuncAsync">
+            <summary>
+            Asynchronous function to transition the destination result back to the source.
+            </summary>
+        </member>
+        <member name="P:Banzai.ITransitionFuncNode`2.TransitionResultFunc">
+            <summary>
+            Asynchronous function to transition the destination result back to the source.
+            </summary>
+        </member>
+        <member name="T:Banzai.TransitionFuncNode`2">
+            <summary>
+            Node that allows a transition to another node type and specifies the transitions via functions.
+            </summary>
+            <typeparam name="TSource">Source node type.</typeparam>
+            <typeparam name="TDestination">Destination node type.</typeparam>
+        </member>
+        <member name="T:Banzai.TransitionNode`2">
+            <summary>
+            Interface for a Node that allows a transition to another node type.
+            </summary>
+            <typeparam name="TSource">Original node type.</typeparam>
+            <typeparam name="TDestination">Resultant node type.</typeparam>
+        </member>
+        <member name="M:Banzai.TransitionNode`2.Reset">
+            <summary>
+            Resets this node and all its children to an unrun state.
+            </summary>
+        </member>
+        <member name="M:Banzai.TransitionNode`2.PerformExecuteAsync(Banzai.IExecutionContext{`0})">
+            <summary>
+            Executes child nodes of the current node.
+            </summary>
+            <param name="context">Current ExecutionContext.</param>
+            <returns>NodeResultStatus representing the current node result.</returns>
+        </member>
+        <member name="M:Banzai.TransitionNode`2.TransitionSourceAsync(Banzai.IExecutionContext{`0})">
+            <summary>
+            Transitions from the source subject to the destination subject.
+            </summary>
+            <param name="sourceContext">The source execution context, including the subject.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Banzai.TransitionNode`2.TransitionSource(Banzai.IExecutionContext{`0})">
+            <summary>
+            Transitions from the source subject to the destination subject.
+            </summary>
+            <param name="sourceContext">The source execution context, including the subject.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Banzai.TransitionNode`2.TransitionResultAsync(Banzai.IExecutionContext{`0},Banzai.NodeResult)">
+            <summary>
+            Transitions the source based on the child result to prepare for. 
+            </summary>
+            <param name="sourceContext">Context including the source subject.</param>
+            <param name="result">The result of the destination node.</param>
+            <returns>The transitioned subject.</returns>
+        </member>
+        <member name="M:Banzai.TransitionNode`2.TransitionResult(Banzai.IExecutionContext{`0},Banzai.NodeResult)">
+            <summary>
+            Transitions the source based on the child result to prepare for. 
+            </summary>
+            <param name="sourceContext">Context including the source subject.</param>
+            <param name="result">The result of the destination node.</param>
+            <returns>The transitioned subject.</returns>
+        </member>
+        <member name="P:Banzai.TransitionNode`2.NodeFactory">
+            <summary>
+            Gets or sets an injected NodeFactory to use when constructing this node.
+            </summary>
+        </member>
+        <member name="P:Banzai.TransitionNode`2.ChildNode">
+            <summary>
+            Gets or sets the TDestination child node to operate on.
+            </summary>
+        </member>
+        <member name="M:Banzai.TransitionFuncNode`2.TransitionSourceAsync(Banzai.IExecutionContext{`0})">
+            <summary>
+            Transitions from the source subject to the destination subject.
+            </summary>
+            <param name="sourceContext">The source execution context, including the subject.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Banzai.TransitionFuncNode`2.TransitionSource(Banzai.IExecutionContext{`0})">
+            <summary>
+            Transitions from the source subject to the destination subject.
+            </summary>
+            <param name="sourceContext">The source execution context, including the subject.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Banzai.TransitionFuncNode`2.TransitionResultAsync(Banzai.IExecutionContext{`0},Banzai.NodeResult)">
+            <summary>
+            Transitions the source based on the child result to prepare for return to the source flow. 
+            </summary>
+            <param name="sourceContext">Context including the source subject.</param>
+            <param name="result">The result of the destination node.</param>
+            <returns>The transitioned subject.</returns>
+        </member>
+        <member name="M:Banzai.TransitionFuncNode`2.TransitionResult(Banzai.IExecutionContext{`0},Banzai.NodeResult)">
+            <summary>
+            Transitions the source based on the child result to prepare for return to the source flow. 
+            </summary>
+            <param name="sourceContext">Context including the source subject.</param>
+            <param name="result">The result of the destination node.</param>
+            <returns>The transitioned subject.</returns>
+        </member>
+        <member name="P:Banzai.TransitionFuncNode`2.TransitionSourceFuncAsync">
+            <summary>
+            Asynchronous function to transition the source to the destination.
+            </summary>
+        </member>
+        <member name="P:Banzai.TransitionFuncNode`2.TransitionSourceFunc">
+            <summary>
+            Synchronous function to transition the source to the destination.
+            </summary>
+        </member>
+        <member name="P:Banzai.TransitionFuncNode`2.TransitionResultFuncAsync">
+            <summary>
+            Asynchronous function to transition the destination result back to the source.
+            </summary>
+        </member>
+        <member name="P:Banzai.TransitionFuncNode`2.TransitionResultFunc">
+            <summary>
+            Asynchronous function to transition the destination result back to the source.
+            </summary>
+        </member>
+        <member name="T:Banzai.Utility.DynamicDictionary">
+            <summary>
+            Dynamic dictionary for storing state.
+            </summary>
+        </member>
+        <member name="T:Banzai.Utility.Guard">
+            <summary>
+            Provides guard clauses.
+            </summary>
+        </member>
+        <member name="M:Banzai.Utility.Guard.AgainstNullProperty``1(System.String,``0)">
+            <summary>
+            Guards against a null argument.
+            </summary>
+            <typeparam name="TProperty">The type of the property.</typeparam>
+            <param name="propertyName">Name of the property.</param>
+            <param name="property">The argument.</param>
+            <exception cref="T:System.NullReferenceException"><paramref name="property"/> is <c>null</c>.</exception>
+        </member>
+        <member name="M:Banzai.Utility.Guard.AgainstNullArgument``1(System.String,``0)">
+            <summary>
+            Guards against a null argument.
+            </summary>
+            <typeparam name="TArgument">The type of the argument.</typeparam>
+            <param name="parameterName">Name of the parameter.</param>
+            <param name="argument">The argument.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="argument"/> is <c>null</c>.</exception>
+        </member>
+        <member name="M:Banzai.Utility.Guard.AgainstNullArgumentProperty``1(System.String,System.String,``0)">
+            <summary>
+            Guards against a null argument property value.
+            </summary>
+            <typeparam name="TProperty">The type of the property.</typeparam>
+            <param name="parameterName">Name of the parameter.</param>
+            <param name="propertyName">Name of the property.</param>
+            <param name="argumentProperty">The argument property.</param>
+            <exception cref="T:System.ArgumentException"><paramref name="argumentProperty"/> is <c>null</c>.</exception>
+        </member>
+        <member name="M:Banzai.Utility.Guard.AgainstNullOrEmptyArgument(System.String,System.String)">
+            <summary>
+            Guards against a null or empty argument.
+            </summary>
+            <param name="parameterName">Name of the parameter.</param>
+            <param name="argument">The argument.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="argument"/> is <c>null</c>.</exception>
+        </member>
+        <member name="T:Banzai.NodeExtensions">
+            <summary>
+            Extensions to make adding should execute functions to an INode type safe.
+            </summary>
+        </member>
+        <member name="M:Banzai.NodeExtensions.AddShouldExecute``1(Banzai.INode{``0},System.Func{Banzai.IExecutionContext{``0},System.Boolean})">
+            <summary>
+            Adds a ShouldExecuteFunc to the INode.
+            </summary>
+            <typeparam name="T">Type of the subject the node acts upon.</typeparam>
+            <param name="node">Node to add ShouldExecute to.</param>
+            <param name="shouldExecuteFunc">Strongly typed ShouldExecuteFunc.</param>
+            <returns>The INode with the function added.</returns>
+        </member>
+        <member name="M:Banzai.NodeExtensions.AddShouldExecute``1(Banzai.INode{``0},System.Func{Banzai.IExecutionContext{``0},System.Threading.Tasks.Task{System.Boolean}})">
+            <summary>
+            Adds a ShouldExecuteFuncAsync to the INode.
+            </summary>
+            <typeparam name="T">Type of the subject the node acts upon.</typeparam>
+            <param name="node">Node to add ShouldExecute to.</param>
+            <param name="shouldExecuteFuncAsync">Strongly typed ShouldExecuteFuncAsync.</param>
+            <returns>The INode with the function added.</returns>
+        </member>
+        <member name="T:Banzai.ExecutionOptions">
+            <summary>
+            Options that define how execution of the nodes is conducted.
+            </summary>
+        </member>
+        <member name="P:Banzai.ExecutionOptions.ContinueOnFailure">
+            <summary>
+            Indicates that parent processing should continue if the current node fails.
+            </summary>
+        </member>
+        <member name="P:Banzai.ExecutionOptions.ThrowOnError">
+            <summary>
+            Indicates that pipeline processing should throw an exception when an error occurs instead of adding it to the error collection.
+            </summary>
+            <remarks>
+            This applies to the execution of the node only.  An error will always be thrown if ShouldExecute errs.
+            </remarks>
+        </member>
+        <member name="P:Banzai.ExecutionOptions.DegreeOfParallelism">
+            <summary>
+            Sets the degree of parallelism when executing many asynchronously.
+            </summary>
+        </member>
+        <member name="T:Banzai.NodeResult">
+            <summary>
+            The results of a node execution.
+            </summary>
+        </member>
+        <member name="M:Banzai.NodeResult.#ctor(System.Object)">
+            <summary>
+            Constructs a new NodeResult.
+            </summary>
+            <param name="subject">Subject operated on by the node.</param>
+        </member>
+        <member name="M:Banzai.NodeResult.GetSubjectAs``1">
+            <summary>
+            Convenience method to allow the subject to be retrieved and casted at teh same time.
+            </summary>
+            <typeparam name="T">Type to cast the subject to.</typeparam>
+            <returns>Typed subject.</returns>
+        </member>
+        <member name="M:Banzai.NodeResult.GetFailExceptions">
+            <summary>
+            If the node was a failure, aggregates execptions along the failure path.
+            </summary>
+            <remarks>
+            This does not include all exceptions.  Exceptions that are descendents of nodes that are not marked as failures are not included.
+            The basic idea is that these exceptions were important in the failure of the inspected node.
+            </remarks>
+        </member>
+        <member name="M:Banzai.NodeResult.AppendFailExceptions(System.Collections.Generic.ICollection{System.Exception})">
+            <summary>
+            Appends exceptions from this node to the requested collection and recurses children.
+            </summary>
+            <param name="exceptions">Exceptions list to add items to.</param>
+        </member>
+        <member name="M:Banzai.NodeResult.AddChildResult(Banzai.NodeResult)">
+            <summary>
+            Adds a child result to the current result.
+            </summary>
+            <param name="result">Result to add to child results.</param>
+        </member>
+        <member name="M:Banzai.NodeResult.AddChildResults(System.Collections.Generic.IEnumerable{Banzai.NodeResult})">
+            <summary>
+            Adds a child result to the current result.
+            </summary>
+            <param name="results">Results to add to child results.</param>
+        </member>
+        <member name="P:Banzai.NodeResult.Subject">
+            <summary>
+            Subject operated on by the node.
+            </summary>
+        </member>
+        <member name="P:Banzai.NodeResult.Status">
+            <summary>
+            Success status of the node operation.
+            </summary>
+        </member>
+        <member name="P:Banzai.NodeResult.Exception">
+            <summary>
+            Exception, if any, that happened on this node during execution.
+            </summary>
+        </member>
+        <member name="P:Banzai.NodeResult.ChildResults">
+            <summary>
+            Child results if the node contained child nodes.
+            </summary>
+        </member>
+        <member name="T:Banzai.NodeRunStatus">
+            <summary>
+            Indicates the current run status of the node.
+            </summary>
+        </member>
+        <member name="F:Banzai.NodeRunStatus.NotRun">
+            <summary>
+            Node has not been run.
+            </summary>
+        </member>
+        <member name="F:Banzai.NodeRunStatus.Running">
+            <summary>
+            Node is running.
+            </summary>
+        </member>
+        <member name="F:Banzai.NodeRunStatus.Completed">
+            <summary>
+            Node has completed running.
+            </summary>
+        </member>
+        <member name="F:Banzai.NodeRunStatus.Faulted">
+            <summary>
+            Node has faulted, meaning an exception was thrown.
+            </summary>
+        </member>
+        <member name="T:Banzai.NodeResultStatus">
+            <summary>
+            Result status of a node.
+            </summary>
+        </member>
+        <member name="F:Banzai.NodeResultStatus.NotRun">
+            <summary>
+            Node has not been run.
+            </summary>
+        </member>
+        <member name="F:Banzai.NodeResultStatus.SucceededWithErrors">
+            <summary>
+            Node is considered a success but errors were encountered.
+            </summary>
+        </member>
+        <member name="F:Banzai.NodeResultStatus.Succeeded">
+            <summary>
+            Node ran successfully.
+            </summary>
+        </member>
+        <member name="F:Banzai.NodeResultStatus.Failed">
+            <summary>
+            Node failed horribly.
+            </summary>
+        </member>
+        <member name="T:Banzai.Utility.NodeTimer">
+            <summary>
+            Used to time nodes and write to the log.
+            </summary>
+        </member>
+        <member name="T:Banzai.Utility.ParallelExtensions">
+            <summary>
+            Extensions to help with parallel operations.
+            </summary>
+        </member>
+        <member name="M:Banzai.Utility.ParallelExtensions.ForEachAsync``1(System.Collections.Generic.IEnumerable{``0},System.Int32,System.Func{``0,System.Threading.Tasks.Task})">
+            <summary>
+            Performs the function asyncrhonously using the specified degree of parallelism.
+            </summary>
+            <typeparam name="T">Type of the enumerable to operate on.</typeparam>
+            <param name="source">Source to operate on.</param>
+            <param name="degreeOfParallelism">Number of simultaneously executing operations.</param>
+            <param name="func">Function to execute.</param>
+            <returns>A whenall task to await.</returns>
+        </member>
+    </members>
+</doc>

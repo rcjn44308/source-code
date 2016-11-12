@@ -1,0 +1,118 @@
+﻿@using System.Web.Optimization
+@model ML.Web.Models.KycViewModel
+
+@{
+    ViewBag.Title = "Add KYC";
+}
+
+<div class="col-md-12 padLefAndRight">
+    <div style="margin-top:5px">
+        <div class="panel panel-danger">
+            <div class="panel-heading" style="background-color: #fff;">
+                <h4><b>Add KYC Form</b></h4>
+                <a href="#" class="pull-right" style="margin-top: -27px;" data-toggle="modal" data-target="#myModal">Need help?</a>
+            </div>
+            <div id="divUdateUrl" data-url="@Url.Action("UpdateKyc", "kyc")"></div>
+            <div class="panel-body">
+                <form id="formkyc" action="@Url.Action("Submitkyc", "kyc")" novalidate>
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(m => m.custID)
+                    @Html.HiddenFor(m => m.isUpdate)
+                    <h3>PERSONAL</h3>
+                    <fieldset style="overflow-y: scroll;">
+                        <h4 style="color: #cc0001;"><b>Personal Information</b></h4>
+                        <hr />
+
+                        <div>
+                            <div class="col-md-4 divMarginTop">
+
+                                @Html.LabelFor(m => m.Fname)
+                                @Html.TextBoxFor(m => m.Fname, new { @class = "form-control  text-uppercase  required" })
+                            </div>
+                            <div class="col-md-4 divMarginTop">
+                                @Html.LabelFor(m => m.Mname)
+                                @Html.TextBoxFor(m => m.Mname, new { @class = "form-control text-uppercase required" })
+                            </div>
+                            <div class="col-md-4 divMarginTop">
+                                @Html.LabelFor(m => m.Lname)
+                                @Html.TextBoxFor(m => m.Lname, new { @class = "form-control text-uppercase required" })
+                            </div>
+                            <div class="col-md-4 divMarginTop">
+                                @Html.LabelFor(m => m.bdate)
+                                @Html.EditorFor(m => m.bdate, new { htmlAttributes = new { @class = "form-control required" } })
+                            </div>
+                            <div class="col-md-4 divMarginTop">
+                                @Html.LabelFor(m => m.bplace)
+                                @Html.TextBoxFor(m => m.bplace, new { @class = "form-control text-uppercase required" })
+                            </div>
+                            <div class="col-md-4 divMarginTop">
+                                @Html.LabelFor(m => m.gender)
+                                @Html.DropDownListFor(m => m.gender, Model.sgender, new { @class = "form-control required" })
+                            </div>
+                            <div class="col-md-4 divMarginTop">
+                                @Html.LabelFor(m => m.permanentAdd)
+                                @Html.TextBoxFor(m => m.permanentAdd, new { @class = "form-control text-uppercase required" })
+                            </div>
+                            <div class="col-md-4 divMarginTop">
+                                @Html.LabelFor(m => m.currentAdd)
+                                @Html.TextBoxFor(m => m.currentAdd, new { @class = "form-control text-uppercase required" })
+                            </div>
+                            <div class="col-md-4 divMarginTop">
+                                @Html.LabelFor(m => m.provState)
+                                @Html.TextBoxFor(m => m.provState, new { @class = "form-control text-uppercase required" })
+                            </div>
+                            <div class="col-md-4 divMarginTop">
+                                @Html.LabelFor(m => m.selectcountry)
+                                @Html.DropDownListFor(m => m.selectcountry, Model.listcountry.Select(s => new SelectListItem { Text = s.Text, Value = s.Value.ToString(), Selected = s.Value == "Philippines" }), new { @id = "Bcountry", @class = "form-control text-uppercase" })
+                            </div>
+                            <div class="col-md-4 divMarginTop">
+                                @Html.LabelFor(m => m.nationality)
+                                @Html.TextBoxFor(m => m.nationality, new { @class = "form-control text-uppercase required" })
+                            </div>
+                        </div>
+
+                    </fieldset>
+
+                    <h3>CONTACT</h3>
+                    <fieldset style="overflow-y: scroll;">
+                        <h4 style="color: #cc0001;"><b>Contact Information</b></h4>
+                        <hr />
+
+                        <div>
+                            <div class="col-md-4 divMarginTop">
+                                @Html.LabelFor(m => m.mobileNo)
+                                @Html.TextBoxFor(m => m.mobileNo, new { @class = "form-control required" })
+                            </div>
+                            <div class="col-md-4 divMarginTop">
+                                @Html.LabelFor(m => m.phoneNo)
+                                @Html.TextBoxFor(m => m.phoneNo, new { @class = "form-control" })
+                            </div>
+                            <div class="col-md-4 divMarginTop">
+                                @Html.LabelFor(m => m.email)
+                                @Html.TextBoxFor(m => m.email, new { @class = "form-control" })
+                            </div>
+                            <div class="col-md-4 divMarginTop">
+                                @Html.LabelFor(m => m.SelectedIDtype)
+                                @Html.DropDownListFor(m => m.SelectedIDtype, Model.IDType, new { @class = "form-control required" })
+                            </div>
+                            <div class="col-md-4 divMarginTop">
+                                @Html.LabelFor(m => m.Idno)
+                                @Html.TextBoxFor(m => m.Idno, new { @class = "form-control text-uppercase required" })
+                            </div>
+                            <div class="col-md-4 divMarginTop">
+                                @Html.LabelFor(m => m.ExpiryDate)
+                                @Html.EditorFor(m => m.ExpiryDate, new { htmlAttributes = new { @class = "form-control required" } })
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+@section scripts{
+    @Scripts.Render("~/bundles/steps")
+    @Scripts.Render("~/bundles/kyc")
+}

@@ -1,0 +1,39 @@
+﻿<button type="button" class="btn btn-success pull-right btnPrint" data-toggle="modal" data-target=".exportPDF" style="margin-right: 4px; margin-top: 3px;"><i class="glyphicon glyphicon-print"></i> Print Report</button>
+<div>
+    <table>
+        <tr>
+            <td style="text-align:left; width:110px"><b>Transaction Date&nbsp;</b> <b>:</b></td>
+            <td><span id="lblTransDate"></span></td>
+        </tr>
+        <tr>
+            <td style="text-align:left; width:110px">
+                <b>
+                    Printed By
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;
+                </b> <b>:</b>
+            </td>
+            <td>
+                <span id="lblPrintBy"></span>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align:left; width:110px">
+                <b>Date</b>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;
+                <b>:</b>
+            </td>
+            <td><span id="lblDate"></span></td>
+        </tr>
+    </table>
+</div>
+<br />
+<input type="hidden" id="txtrptdtfrom" />
+<input type="hidden" id="txtrptdtto" />
+<input type="hidden" id="txtrptyear" />
+<input type="hidden" id="txtrptmonth" />

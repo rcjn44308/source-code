@@ -1,0 +1,43 @@
+﻿@using System.Web.Optimization
+@model ML.Web.Models.ReportsViewModel
+
+@{
+    ViewBag.Title = "Daily Cancellation Report";
+}
+
+<div class="col-md-12 padLefAndRight">
+    <div class="row-1">
+        <div class="panel panel-danger minheight" style="margin-top:5px">
+            <div class="panel-heading" style="background-color: #fff;">
+                <h4><b>Daily Cancellation Report Form</b></h4>
+                <a href="#" class="pull-right" style="margin-top: -27px;" data-toggle="modal" data-target="#myModal">Need help?</a>
+            </div>
+            <div class="panel-body">
+                <div class="col-md-3 adjustPadding">
+                    <label for="txtdtFrom">Date</label>
+                    @Html.EditorFor(m => m.dtFrom, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="col-md-3 adjustPadding">
+                    <button id="btnSearchDaily" data-url="@Url.Action("DailyCancellationReport", "BillsPayReport")" class="btn btn-danger neednet" style="margin-top: 21px;"><i class="glyphicon glyphicon-search"></i>  Search</button>
+                    @*<input type="submit" class="btn btn-danger" value="Search" />*@
+                </div>
+
+                <div class="col-md-12 adjustPadding">
+                    <br />
+                    <h4 style="color: #cc0001;"><b>Search Result</b></h4>
+
+                    <div id="divResultHead" style="display:none">
+                        @{ Html.RenderPartial("_reportHead");}
+                    </div>
+                    <div id="divSearchDailyResult">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+@section scripts{
+    @Scripts.Render("~/bundles/reports")
+}

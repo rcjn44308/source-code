@@ -1,0 +1,4 @@
+C:\Users\CABA13072442\Documents\Visual Studio 2013\Projects\OFW\RCJN.Samp\bin\Release\RCJN.Samp.dll
+C:\Users\CABA13072442\Documents\Visual Studio 2013\Projects\OFW\RCJN.Samp\bin\Release\RCJN.Samp.pdb
+C:\Users\CABA13072442\Documents\Visual Studio 2013\Projects\OFW\RCJN.Samp\obj\Release\RCJN.Samp.dll
+C:\Users\CABA13072442\Documents\Visual Studio 2013\Projects\OFW\RCJN.Samp\obj\Release\RCJN.Samp.pdb

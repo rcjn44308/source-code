@@ -1,0 +1,158 @@
+﻿@using System.Web.Optimization
+@{
+    ViewBag.Title = "Bills Payment Form";
+}
+<div class="col-md-12 padLefAndRight">
+    <div style="margin-top:5px">
+        <div class="panel panel-danger">
+            <div class="panel-heading">
+                <h4><b>Bills Payment Form</b></h4>
+                <a href="#" class="pull-right" style="margin-top: -27px;" data-toggle="modal" data-target="#myModal">Need help?</a>
+            </div>
+            <div class="panel-body">
+                <form id="formbillspay" action="@Url.Action("SubmitBillsPay", "BillsPay")">
+                    <h3>PAYER</h3>
+                    <fieldset style="overflow-y: scroll;">
+                        <h4 style="color: #cc0001;"><b>Payer Information</b></h4>
+                        <hr />
+                        <p style="margin-left: 14px;">
+                            <span class="btn btn-danger"><i class="glyphicon glyphicon-search"></i> Search Payer</span>
+                            <label style="color:red">&nbsp;&nbsp;&nbsp;"Click this button to search payer."</label>
+                            <br /><br />
+                        </p>
+                        <div>
+                            <div class="col-md-6">
+                                <label for="txtlname">Last name *</label>
+                                <input id="txtlname" name="txtlname" type="text" class="form-control required" />
+                            </div>
+                            <div class="col-md-6">
+                                <label for="txtfname">First name *</label>
+                                <input id="txtfname" name="txtfname" type="text" class="form-control required" />
+                            </div>
+                            <div class="col-md-6">
+                                <label for="txtmname">Middle name</label>
+                                <input id="txtmname" name="txtmname" type="text" class="form-control" onkeydown="return false;" />
+                            </div>
+                            <div class="col-md-6">
+                                <label for="txtcontact">Contact No</label>
+                                <input id="txtcontact" name="txtcontact" type="text" class="form-control" onkeydown="return false;" />
+                            </div>
+                            <div class="col-md-12">
+                                <label for="txtAddress">Address</label>
+                                <textarea id="txtAddress" class="form-control" name="txtAddress" onkeydown="return false;"></textarea>
+                            </div>
+                        </div>
+
+                    </fieldset>
+
+                    <h3>ACCOUNT</h3>
+                    <fieldset style="overflow-y: scroll;">
+                        <h4 style="color: #cc0001;"><b>Account Information</b></h4>
+                        <hr />
+                        <p style="margin-left: 14px;">
+                            <span class="btn btn-danger"><i class="glyphicon glyphicon-search"></i> Search Company</span>
+                            <label style="color:red">&nbsp;&nbsp;&nbsp;"Click this button to search company."</label>
+                            <br /><br />
+                        </p>
+
+                        <div class="col-md-12">
+                            <label for="txtCompany">Company</label>
+                            <input type="text" name="txtCompany" class="form-control required" />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="txtAccountNo">Account No</label>
+                            <input type="text" name="txtAccountNo" class="form-control required" />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="txtCfname">First name</label>
+                            <input type="text" name="txtCfname" class="form-control required" />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="txtClname">Last name</label>
+                            <input type="text" name="txtClname" class="form-control required" />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="txtCmname">Middle name</label>
+                            <input type="text" name="txtCmname" class="form-control" />
+                        </div>
+                    </fieldset>
+
+                    <h3>PAYMENT</h3>
+                    <fieldset style="overflow-y: scroll;">
+                        <h4 style="color: #cc0001;"><b>Payment Information</b></h4>
+                        <hr />
+                        <div class="col-md-6">
+                            <label for="txtAmount">Amount Paid</label>
+                            <input type="text" name="txtAmount" class="form-control required" />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="txtCurrency">Currecy</label>
+                            <input type="text" name="txtCurrency" class="form-control required" />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="txtCharge">Charge</label>
+                            <input type="text" name="txtCharge" class="form-control" />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="txtOtherDetails">Other Details</label>
+                            <input type="text" name="txtOtherDetails" class="form-control" />
+                        </div>
+
+                    </fieldset>
+
+                    <h3>CONFIRMATION</h3>
+                    <fieldset style="overflow-y: scroll;">
+                        <h4 style="color: #cc0001;"><b>Confirmation Information</b></h4>
+                        <hr />
+
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="js-title-step"></h4>
+            </div>
+            <div class="modal-body">
+                <div class="row hide" data-step="1" data-title="Payers Information">
+                    <div class="well">
+                        <p>1.) Click button "Sample Image" to search payer.</p>
+                        <p>2.) Type payers information for searching.</p>
+                        <p>3.) Click button "Select" to auto fill payer's information</p>
+                        <p>4.) Click next button "Next Step" to proceed account information.</p>
+                    </div>
+                </div>
+                <div class="row hide" data-step="2" data-title="Account Information">
+                    <div class="well">
+                        <p>1.) Click button "Sample Image" to search company.</p>
+                        <p>2.) Type company information for searching.</p>
+                        <p>3.) Click button "Select" to auto fill company's information</p>
+                        <p>4.) Click next button "Next Step" to proceed payment information.</p>
+                    </div>
+                </div>
+                <div class="row hide" data-step="3" data-title="Payment Information">
+                    <div class="well">
+                        <p>1.) Fill-up amount paid.</p>
+                        <p>2.) Fill-up currency.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default js-btn-step pull-left" data-orientation="cancel" data-dismiss="modal"></button>
+                <button type="button" class="btn btn-warning js-btn-step" data-orientation="previous"></button>
+                <button type="button" class="btn btn-success js-btn-step" data-orientation="next"></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    @Scripts.Render("~/bundles/steps")
+    @Scripts.Render("~/bundles/trans")
+}
